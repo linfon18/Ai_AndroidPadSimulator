@@ -1,0 +1,90 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:AndroidPadSimulator.ViewModels"
+             x:Class="AndroidPadSimulator.Views.StorageSettingsView"
+             x:DataType="vm:StorageSettingsViewModel">
+
+    <Grid Background="#FF121212">
+        <!-- 顶部状态栏 -->
+        <Grid VerticalAlignment="Top" Margin="24,16,24,0" Height="40">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- 返回按钮 -->
+            <Button Grid.Column="0"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Width="40"
+                    Height="40"
+                    Command="{Binding GoBackCommand}">
+                <TextBlock Text="&lt;" Foreground="White" FontSize="24"/>
+            </Button>
+
+            <!-- 标题 -->
+            <TextBlock Grid.Column="1"
+                       Text="存储设置"
+                       Foreground="White"
+                       FontSize="16"
+                       FontWeight="SemiBold"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"/>
+
+            <!-- 更多按钮 -->
+            <Button Grid.Column="2"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Width="40"
+                    Height="40">
+                <TextBlock Text="..." Foreground="White" FontSize="24"/>
+            </Button>
+        </Grid>
+
+        <!-- 内容区域 -->
+        <ScrollViewer Margin="0,72,0,0" VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="24,0,24,24" Spacing="16">
+                <!-- 存储概览 -->
+                <Border Background="#1E1E1E" 
+                        CornerRadius="16" 
+                        Padding="24" 
+                        Margin="0,16,0,0">
+                    <StackPanel>
+                        <TextBlock Text="内部存储" 
+                                   Foreground="White" 
+                                   FontSize="18" 
+                                   FontWeight="SemiBold" 
+                                   Margin="0,0,0,16"/>
+
+                        <StackPanel Orientation="Horizontal" 
+                                    Margin="0,0,0,16" 
+                                    VerticalAlignment="Center">
+                            <TextBlock Text="{Binding UsedStorage} / {Binding TotalStorage}" 
+                                       Foreground="White" 
+                                       FontSize="24" 
+                                       FontWeight="SemiBold"/>
+                            <TextBlock Text=" ({Binding StorageUsagePercent}%)" 
+                                       Foreground="#B3FFFFFF" 
+                                       FontSize="16" 
+                                       Margin="8,0,0,0" 
+                                       VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <ProgressBar Value="{Binding StorageUsagePercent}" 
+                                     Maximum="100"
+                                     Height="12"
+                                     Margin="0,0,0,16"
+                                     Background="#33FFFFFF"
+                                     Foreground="#00BCD4" 
+                                     CornerRadius="6"/>
+
+                        <TextBlock Text="可用空间: {Binding AvailableStorage}" 
+                                   Foreground="#B3FFFFFF" 
+                                   FontSize="14"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

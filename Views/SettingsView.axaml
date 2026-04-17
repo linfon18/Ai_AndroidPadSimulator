@@ -1,0 +1,913 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:AndroidPadSimulator.ViewModels"
+             x:Class="AndroidPadSimulator.Views.SettingsView"
+             x:DataType="vm:SettingsViewModel">
+
+    <Grid Background="#FF121212">
+        <!-- 顶部状态栏 -->
+        <Grid VerticalAlignment="Top" Margin="24,16,24,0" Height="40">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- 返回按钮 -->
+            <Button Grid.Column="0"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Width="40"
+                    Height="40"
+                    Command="{Binding GoBackCommand}">
+                <Path Data="M20,11 L7.83,11 L13.42,5.41 L12,4 L4,12 L12,20 L13.41,18.59 L7.83,13 L20,13 L20,11 Z"
+                      Fill="White" Width="24" Height="24"/>
+            </Button>
+
+            <!-- 时间 -->
+            <TextBlock Grid.Column="1"
+                       Text="{Binding CurrentTime}"
+                       Foreground="White"
+                       FontSize="14"
+                       FontWeight="SemiBold"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"/>
+
+            <!-- 状态图标 -->
+            <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="10">
+                <Path Data="M2,18 L6,18 L6,22 L2,22 Z M7,16 L11,16 L11,22 L7,22 Z M12,12 L16,12 L16,22 L12,22 Z M17,8 L21,8 L21,22 L17,22 Z"
+                      Fill="White" Width="16" Height="16"/>
+                <Path Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,20 C7.59,20 4,16.41 4,12 C4,7.59 7.59,4 12,4 C16.41,4 20,7.59 20,12 C20,16.41 16.41,20 12,20 Z M12,6 C9.79,6 8,7.79 8,10 L10,10 C10,8.9 10.9,8 12,8 C13.1,8 14,8.9 14,10 L16,10 C16,7.79 14.21,6 12,6 Z"
+                      Fill="White" Width="16" Height="16"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- 设置内容 -->
+        <ScrollViewer Margin="0,72,0,0" VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="24,0,24,24" Spacing="8">
+                <!-- 标题 -->
+                <TextBlock Text="设置" 
+                           Foreground="White" 
+                           FontSize="32" 
+                           FontWeight="SemiBold"
+                           Margin="0,16,0,24"/>
+
+                <!-- 用户头像区域 -->
+                <Button Background="#1E1E1E" 
+                        CornerRadius="16" 
+                        Padding="20,16"
+                        Margin="0,0,0,16"
+                        BorderThickness="0"
+                        Command="{Binding OpenUserProfileCommand}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <!-- 头像 -->
+                        <Border Grid.Column="0" 
+                                Width="56" 
+                                Height="56" 
+                                CornerRadius="28" 
+                                Background="#4CAF50">
+                            <TextBlock Text="U" 
+                                       Foreground="White" 
+                                       FontSize="24" 
+                                       FontWeight="SemiBold"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+                        
+                        <!-- 用户信息 -->
+                        <StackPanel Grid.Column="1" Margin="16,0,0,0" VerticalAlignment="Center">
+                            <TextBlock Text="用户" Foreground="White" FontSize="18" FontWeight="Medium"/>
+                            <TextBlock Text="管理您的 Google 账号" Foreground="#B3FFFFFF" FontSize="14" Margin="0,4,0,0"/>
+                        </StackPanel>
+                        
+                        <!-- 箭头 -->
+                        <Path Grid.Column="2" 
+                              Data="M8.59,16.59 L13.17,12 L8.59,7.41 L10,6 L16,12 L10,18 L8.59,16.59 Z"
+                              Fill="#B3FFFFFF" Width="24" Height="24"/>
+                    </Grid>
+                </Button>
+
+                <!-- 网络和互联网 -->
+                <Border Background="#1E1E1E" CornerRadius="16" Margin="0,8">
+                    <StackPanel>
+                        <!-- WiFi -->
+                        <Button Background="Transparent" 
+                                BorderThickness="0" 
+                                Padding="20,16"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ToggleWifiCommand}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Border Grid.Column="0" 
+                                        Width="40" 
+                                        Height="40" 
+                                        CornerRadius="20" 
+                                        Background="{Binding IsWifiEnabled, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#4CAF50|#757575'}">
+                                    <Path Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,20 C7.59,20 4,16.41 4,12 C4,7.59 7.59,4 12,4 C16.41,4 20,7.59 20,12 C20,16.41 16.41,20 12,20 Z M12,6 C9.79,6 8,7.79 8,10 L10,10 C10,8.9 10.9,8 12,8 C13.1,8 14,8.9 14,10 L16,10 C16,7.79 14.21,6 12,6 Z"
+                                          Fill="White" Width="24" Height="24"/>
+                                </Border>
+                                
+                                <StackPanel Grid.Column="1" Margin="16,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock Text="WLAN" Foreground="White" FontSize="16"/>
+                                    <TextBlock Text="{Binding IsWifiEnabled, Converter={StaticResource BoolToTextConverter}, ConverterParameter='已开启|已关闭'}" 
+                                               Foreground="#B3FFFFFF" FontSize="14" Margin="0,2,0,0"/>
+                                </StackPanel>
+                                
+                                <ToggleSwitch Grid.Column="2" 
+                                              IsChecked="{Binding IsWifiEnabled}"
+                                              IsHitTestVisible="False"/>
+                            </Grid>
+                        </Button>
+
+                        <Rectangle Height="1" Fill="#33FFFFFF" Margin="76,0,0,0"/>
+
+                        <!-- 蓝牙 -->
+                        <Button Background="Transparent" 
+                                BorderThickness="0" 
+                                Padding="20,16"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ToggleBluetoothCommand}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Border Grid.Column="0" 
+                                        Width="40" 
+                                        Height="40" 
+                                        CornerRadius="20" 
+                                        Background="{Binding IsBluetoothEnabled, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#2196F3|#757575'}">
+                                    <Path Data="M17.71,7.71 L12,2 L11,2 L11,9.59 L6.41,5 L5,6.41 L10.59,12 L5,17.59 L6.41,19 L11,14.41 L11,22 L12,22 L17.71,16.29 L13.41,12 L17.71,7.71 Z M13,5.83 L15.17,8 L13,10.17 L13,5.83 Z M13,18.17 L13,13.83 L15.17,16 L13,18.17 Z"
+                                          Fill="White" Width="24" Height="24"/>
+                                </Border>
+                                
+                                <StackPanel Grid.Column="1" Margin="16,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock Text="蓝牙" Foreground="White" FontSize="16"/>
+                                    <TextBlock Text="{Binding IsBluetoothEnabled, Converter={StaticResource BoolToTextConverter}, ConverterParameter='已开启|已关闭'}" 
+                                               Foreground="#B3FFFFFF" FontSize="14" Margin="0,2,0,0"/>
+                                </StackPanel>
+                                
+                                <ToggleSwitch Grid.Column="2" 
+                                              IsChecked="{Binding IsBluetoothEnabled}"
+                                              IsHitTestVisible="False"/>
+                            </Grid>
+                        </Button>
+
+                        <Rectangle Height="1" Fill="#33FFFFFF" Margin="76,0,0,0"/>
+
+                        <!-- 移动网络 -->
+                        <Button Background="Transparent" 
+                                BorderThickness="0" 
+                                Padding="20,16"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ToggleMobileDataCommand}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Border Grid.Column="0" 
+                                        Width="40" 
+                                        Height="40" 
+                                        CornerRadius="20" 
+                                        Background="{Binding IsMobileDataEnabled, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#FF9800|#757575'}">
+                                    <Path Data="M2,18 L6,18 L6,22 L2,22 Z M7,16 L11,16 L11,22 L7,22 Z M12,12 L16,12 L16,22 L12,22 Z M17,8 L21,8 L21,22 L17,22 Z"
+                                          Fill="White" Width="24" Height="24"/>
+                                </Border>
+                                
+                                <StackPanel Grid.Column="1" Margin="16,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock Text="移动网络" Foreground="White" FontSize="16"/>
+                                    <TextBlock Text="{Binding IsMobileDataEnabled, Converter={StaticResource BoolToTextConverter}, ConverterParameter='已开启|已关闭'}" 
+                                               Foreground="#B3FFFFFF" FontSize="14" Margin="0,2,0,0"/>
+                                </StackPanel>
+                                
+                                <ToggleSwitch Grid.Column="2" 
+                                              IsChecked="{Binding IsMobileDataEnabled}"
+                                              IsHitTestVisible="False"/>
+                            </Grid>
+                        </Button>
+                    </StackPanel>
+                </Border>
+
+                <!-- 声音和振动 -->
+                <Border Background="#1E1E1E" CornerRadius="16" Margin="0,8">
+                    <StackPanel>
+                        <!-- 音量 -->
+                        <Grid Margin="20,16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <Path Grid.Column="0" 
+                                  Data="M3,9 L3,15 L7,15 L12,20 L12,4 L7,9 L3,9 Z M16.5,12 C16.5,10.23 15.48,8.71 14,7.97 L14,16.02 C15.48,15.29 16.5,13.77 16.5,12 Z"
+                                  Fill="White" Width="24" Height="24"/>
+                            
+                            <Slider Grid.Column="1" 
+                                    Value="{Binding Volume}" 
+                                    Minimum="0" 
+                                    Maximum="100"
+                                    Margin="16,0"/>
+                            
+                            <TextBlock Grid.Column="2" 
+                                       Text="{Binding Volume, StringFormat='{}{0}%'}}"
+                                       Foreground="White"
+                                       FontSize="14"
+                                       Width="40"/>
+                        </Grid>
+
+                        <Rectangle Height="1" Fill="#33FFFFFF" Margin="20,0"/>
+
+                        <!-- 亮度 -->
+                        <Grid Margin="20,16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <Path Grid.Column="0" 
+                                  Data="M20,8.69 L20,4 L15.31,4 L12,0.69 L8.69,4 L4,4 L4,8.69 L0.69,12 L4,15.31 L4,20 L8.69,20 L12,23.31 L15.31,20 L20,20 L20,15.31 L23.31,12 L20,8.69 Z M12,18 C8.69,18 6,15.31 6,12 C6,8.69 8.69,6 12,6 C15.31,6 18,8.69 18,12 C18,15.31 15.31,18 12,18 Z M12,8 C9.79,8 8,9.79 8,12 C8,14.21 9.79,16 12,16 C14.21,16 16,14.21 16,12 C16,9.79 14.21,8 12,8 Z"
+                                  Fill="White" Width="24" Height="24"/>
+                            
+                            <Slider Grid.Column="1" 
+                                    Value="{Binding Brightness}" 
+                                    Minimum="0" 
+                                    Maximum="100"
+                                    Margin="16,0"/>
+                            
+                            <TextBlock Grid.Column="2" 
+                                       Text="{Binding Brightness, StringFormat='{}{0}%'}}"
+                                       Foreground="White"
+                                       FontSize="14"
+                                       Width="40"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- 其他设置 -->
+                <Border Background="#1E1E1E" CornerRadius="16" Margin="0,8">
+                    <StackPanel>
+                        <!-- 飞行模式 -->
+                        <Button Background="Transparent" 
+                                BorderThickness="0" 
+                                Padding="20,16"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ToggleAirplaneModeCommand}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Border Grid.Column="0" 
+                                        Width="40" 
+                                        Height="40" 
+                                        CornerRadius="20" 
+                                        Background="{Binding IsAirplaneModeEnabled, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#F44336|#757575'}">
+                                    <Path Data="M21,16 L15,12 L15,5 L21,16 Z M10.44,8.17 L5.41,3.14 L4,4.55 L9.03,9.58 L10.44,8.17 Z M21.71,18.88 L20.29,20.29 L16.41,16.41 L13,19.83 L13,14.17 L6.41,20.76 L5,19.35 L12.59,11.76 L12.59,5 L15.29,7.71 L15.29,11.76 L18.88,15.35 L21.71,18.88 Z"
+                                          Fill="White" Width="24" Height="24"/>
+                                </Border>
+                                
+                                <StackPanel Grid.Column="1" Margin="16,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock Text="飞行模式" Foreground="White" FontSize="16"/>
+                                    <TextBlock Text="{Binding IsAirplaneModeEnabled, Converter={StaticResource BoolToTextConverter}, ConverterParameter='已开启|已关闭'}" 
+                                               Foreground="#B3FFFFFF" FontSize="14" Margin="0,2,0,0"/>
+                                </StackPanel>
+                                
+                                <ToggleSwitch Grid.Column="2" 
+                                              IsChecked="{Binding IsAirplaneModeEnabled}"
+                                              IsHitTestVisible="False"/>
+                            </Grid>
+                        </Button>
+
+                        <Rectangle Height="1" Fill="#33FFFFFF" Margin="76,0,0,0"/>
+
+                        <!-- 定位 -->
+                        <Button Background="Transparent" 
+                                BorderThickness="0" 
+                                Padding="20,16"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ToggleLocationCommand}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Border Grid.Column="0" 
+                                        Width="40" 
+                                        Height="40" 
+                                        CornerRadius="20" 
+                                        Background="{Binding IsLocationEnabled, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#4CAF50|#757575'}">
+                                    <Path Data="M12,2 C8.13,2 5,5.13 5,9 C5,14.25 12,22 12,22 C12,22 19,14.25 19,9 C19,5.13 15.87,2 12,2 Z M12,11.5 C10.62,11.5 9.5,10.38 9.5,9 C9.5,7.62 10.62,6.5 12,6.5 C13.38,6.5 14.5,7.62 14.5,9 C14.5,10.38 13.38,11.5 12,11.5 Z"
+                                          Fill="White" Width="24" Height="24"/>
+                                </Border>
+                                
+                                <StackPanel Grid.Column="1" Margin="16,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock Text="定位服务" Foreground="White" FontSize="16"/>
+                                    <TextBlock Text="{Binding IsLocationEnabled, Converter={StaticResource BoolToTextConverter}, ConverterParameter='已开启|已关闭'}" 
+                                               Foreground="#B3FFFFFF" FontSize="14" Margin="0,2,0,0"/>
+                                </StackPanel>
+                                
+                                <ToggleSwitch Grid.Column="2" 
+                                              IsChecked="{Binding IsLocationEnabled}"
+                                              IsHitTestVisible="False"/>
+                            </Grid>
+                        </Button>
+
+                        <Rectangle Height="1" Fill="#33FFFFFF" Margin="76,0,0,0"/>
+
+                        <!-- NFC -->
+                        <Button Background="Transparent" 
+                                BorderThickness="0" 
+                                Padding="20,16"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ToggleNfcCommand}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Border Grid.Column="0" 
+                                        Width="40" 
+                                        Height="40" 
+                                        CornerRadius="20" 
+                                        Background="{Binding IsNfcEnabled, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#9C27B0|#757575'}">
+                                    <Path Data="M20,2 L4,2 C2.9,2 2,2.9 2,4 L2,20 C2,21.1 2.9,22 4,22 L20,22 C21.1,22 22,21.1 22,20 L22,4 C22,2.9 21.1,2 20,2 Z M20,20 L4,20 L4,4 L20,4 L20,20 Z M6,18 L8,18 L8,12 L6,12 L6,18 Z M10,18 L12,18 L12,10 L10,10 L10,18 Z M14,18 L16,18 L16,8 L14,8 L14,18 Z M18,18 L20,18 L20,6 L18,6 L18,18 Z"
+                                          Fill="White" Width="24" Height="24"/>
+                                </Border>
+                                
+                                <StackPanel Grid.Column="1" Margin="16,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock Text="NFC" Foreground="White" FontSize="16"/>
+                                    <TextBlock Text="{Binding IsNfcEnabled, Converter={StaticResource BoolToTextConverter}, ConverterParameter='已开启|已关闭'}" 
+                                               Foreground="#B3FFFFFF" FontSize="14" Margin="0,2,0,0"/>
+                                </StackPanel>
+                                
+                                <ToggleSwitch Grid.Column="2" 
+                                              IsChecked="{Binding IsNfcEnabled}"
+                                              IsHitTestVisible="False"/>
+                            </Grid>
+                        </Button>
+                    </StackPanel>
+                </Border>
+
+                <!-- 显示 -->
+                <TextBlock Text="显示" Foreground="#B3FFFFFF" FontSize="14" Margin="0,24,0,8"/>
+
+                <Border Background="#1E1E1E" CornerRadius="16" Margin="0,8">
+                    <StackPanel>
+                        <!-- 深色模式 -->
+                        <Button Background="Transparent" 
+                                BorderThickness="0" 
+                                Padding="20,16"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ToggleDarkModeCommand}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Border Grid.Column="0" 
+                                        Width="40" 
+                                        Height="40" 
+                                        CornerRadius="20" 
+                                        Background="#673AB7">
+                                    <Path Data="M12,3 C7.46,3 3.34,6.06 1.5,10.5 C3.34,14.94 7.46,18 12,18 C16.54,18 20.66,14.94 22.5,10.5 C20.66,6.06 16.54,3 12,3 Z M12,16 C8.69,16 6,13.31 6,10 C6,6.69 8.69,4 12,4 C15.31,4 18,6.69 18,10 C18,13.31 15.31,16 12,16 Z"
+                                          Fill="White" Width="24" Height="24"/>
+                                </Border>
+                                
+                                <StackPanel Grid.Column="1" Margin="16,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock Text="深色模式" Foreground="White" FontSize="16"/>
+                                    <TextBlock Text="{Binding IsDarkModeEnabled, Converter={StaticResource BoolToTextConverter}, ConverterParameter='已开启|已关闭'}" 
+                                               Foreground="#B3FFFFFF" FontSize="14" Margin="0,2,0,0"/>
+                                </StackPanel>
+                                
+                                <ToggleSwitch Grid.Column="2" 
+                                              IsChecked="{Binding IsDarkModeEnabled}"
+                                              IsHitTestVisible="False"/>
+                            </Grid>
+                        </Button>
+
+                        <Rectangle Height="1" Fill="#33FFFFFF" Margin="76,0,0,0"/>
+
+                        <!-- 自动旋转 -->
+                        <Button Background="Transparent" 
+                                BorderThickness="0" 
+                                Padding="20,16"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ToggleAutoRotateCommand}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Border Grid.Column="0" 
+                                        Width="40" 
+                                        Height="40" 
+                                        CornerRadius="20" 
+                                        Background="#2196F3">
+                                    <Path Data="M16.48,2.52 C14.56,0.6 11.96,0.03 9.61,1.04 L7.3,2.04 L9.01,6.36 L11.32,5.36 C12.41,4.89 13.68,5.08 14.6,5.9 L18.1,9.4 C18.92,10.32 19.11,11.59 18.64,12.68 L17.64,14.99 L21.96,16.7 L22.96,14.39 C23.97,12.04 23.4,9.44 21.48,7.52 L16.48,2.52 Z M6.52,19.48 C8.44,21.4 11.04,21.97 13.39,20.96 L15.7,19.96 L13.99,15.64 L11.68,16.64 C10.59,17.11 9.32,16.92 8.4,16.1 L4.9,12.6 C4.08,11.68 3.89,10.41 4.36,9.32 L5.36,7.01 L1.04,5.3 L0.04,7.61 C-0.97,9.96 -0.4,12.56 1.52,14.48 L6.52,19.48 Z"
+                                          Fill="White" Width="24" Height="24"/>
+                                </Border>
+                                
+                                <StackPanel Grid.Column="1" Margin="16,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock Text="自动旋转" Foreground="White" FontSize="16"/>
+                                    <TextBlock Text="{Binding IsAutoRotateEnabled, Converter={StaticResource BoolToTextConverter}, ConverterParameter='已开启|已关闭'}" 
+                                               Foreground="#B3FFFFFF" FontSize="14" Margin="0,2,0,0"/>
+                                </StackPanel>
+                                
+                                <ToggleSwitch Grid.Column="2" 
+                                              IsChecked="{Binding IsAutoRotateEnabled}"
+                                              IsHitTestVisible="False"/>
+                            </Grid>
+                        </Button>
+
+                        <Rectangle Height="1" Fill="#33FFFFFF" Margin="76,0,0,0"/>
+
+                        <!-- 护眼模式 -->
+                        <Button Background="Transparent" 
+                                BorderThickness="0" 
+                                Padding="20,16"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ToggleEyeComfortCommand}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Border Grid.Column="0" 
+                                        Width="40" 
+                                        Height="40" 
+                                        CornerRadius="20" 
+                                        Background="#FF9800">
+                                    <Path Data="M12,4.5 C7,4.5 2.73,7.61 1,12 C2.73,16.39 7,19.5 12,19.5 C17,19.5 21.27,16.39 23,12 C21.27,7.61 17,4.5 12,4.5 Z M12,17 C9.24,17 7,14.76 7,12 C7,9.24 9.24,7 12,7 C14.76,7 17,9.24 17,12 C17,14.76 14.76,17 12,17 Z M12,9 C10.34,9 9,10.34 9,12 C9,13.66 10.34,15 12,15 C13.66,15 15,13.66 15,12 C15,10.34 13.66,9 12,9 Z"
+                                          Fill="White" Width="24" Height="24"/>
+                                </Border>
+                                
+                                <StackPanel Grid.Column="1" Margin="16,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock Text="护眼模式" Foreground="White" FontSize="16"/>
+                                    <TextBlock Text="{Binding IsEyeComfortEnabled, Converter={StaticResource BoolToTextConverter}, ConverterParameter='已开启|已关闭'}" 
+                                               Foreground="#B3FFFFFF" FontSize="14" Margin="0,2,0,0"/>
+                                </StackPanel>
+                                
+                                <ToggleSwitch Grid.Column="2" 
+                                              IsChecked="{Binding IsEyeComfortEnabled}"
+                                              IsHitTestVisible="False"/>
+                            </Grid>
+                        </Button>
+                    </StackPanel>
+                </Border>
+
+                <!-- 声音 -->
+                <TextBlock Text="声音" Foreground="#B3FFFFFF" FontSize="14" Margin="0,24,0,8"/>
+
+                <Border Background="#1E1E1E" CornerRadius="16" Margin="0,8">
+                    <StackPanel>
+                        <!-- 静音模式 -->
+                        <Button Background="Transparent" 
+                                BorderThickness="0" 
+                                Padding="20,16"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ToggleSilentModeCommand}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Border Grid.Column="0" 
+                                        Width="40" 
+                                        Height="40" 
+                                        CornerRadius="20" 
+                                        Background="{Binding IsSilentModeEnabled, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#F44336|#757575'}">
+                                    <Path Data="M16.5,12 C16.5,10.23 15.48,8.71 14,7.97 L14,16.02 C15.48,15.29 16.5,13.77 16.5,12 Z M19,12 C19,13.88 18.14,15.55 16.75,16.65 L18.21,18.11 C20.14,16.56 21.31,14.41 21.31,12 C21.31,9.59 20.14,7.44 18.21,5.89 L16.75,7.35 C18.14,8.45 19,10.12 19,12 Z M4,9 L4,15 L7,15 L12,20 L12,4 L7,9 L4,9 Z"
+                                          Fill="White" Width="24" Height="24"/>
+                                </Border>
+                                
+                                <StackPanel Grid.Column="1" Margin="16,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock Text="静音模式" Foreground="White" FontSize="16"/>
+                                    <TextBlock Text="{Binding IsSilentModeEnabled, Converter={StaticResource BoolToTextConverter}, ConverterParameter='已开启|已关闭'}" 
+                                               Foreground="#B3FFFFFF" FontSize="14" Margin="0,2,0,0"/>
+                                </StackPanel>
+                                
+                                <ToggleSwitch Grid.Column="2" 
+                                              IsChecked="{Binding IsSilentModeEnabled}"
+                                              IsHitTestVisible="False"/>
+                            </Grid>
+                        </Button>
+
+                        <Rectangle Height="1" Fill="#33FFFFFF" Margin="76,0,0,0"/>
+
+                        <!-- 振动 -->
+                        <Button Background="Transparent" 
+                                BorderThickness="0" 
+                                Padding="20,16"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ToggleVibrationCommand}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Border Grid.Column="0" 
+                                        Width="40" 
+                                        Height="40" 
+                                        CornerRadius="20" 
+                                        Background="{Binding IsVibrationEnabled, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#4CAF50|#757575'}">
+                                    <Path Data="M0,15 L2,15 L2,21 L0,21 L0,15 Z M3,13 L5,13 L5,23 L3,23 L3,13 Z M22,15 L24,15 L24,21 L22,21 L22,15 Z M19,13 L21,13 L21,23 L19,23 L19,13 Z M16,11 L18,11 L18,25 L16,25 L16,11 Z M6,11 L8,11 L8,25 L6,25 L6,11 Z M9,9 L11,9 L11,27 L9,27 L9,9 Z M13,9 L15,9 L15,27 L13,27 L13,9 Z"
+                                          Fill="White" Width="24" Height="24"/>
+                                </Border>
+                                
+                                <StackPanel Grid.Column="1" Margin="16,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock Text="振动" Foreground="White" FontSize="16"/>
+                                    <TextBlock Text="{Binding IsVibrationEnabled, Converter={StaticResource BoolToTextConverter}, ConverterParameter='已开启|已关闭'}" 
+                                               Foreground="#B3FFFFFF" FontSize="14" Margin="0,2,0,0"/>
+                                </StackPanel>
+                                
+                                <ToggleSwitch Grid.Column="2" 
+                                              IsChecked="{Binding IsVibrationEnabled}"
+                                              IsHitTestVisible="False"/>
+                            </Grid>
+                        </Button>
+                    </StackPanel>
+                </Border>
+
+                <!-- 存储 -->
+                <TextBlock Text="存储" Foreground="#B3FFFFFF" FontSize="14" Margin="0,24,0,8"/>
+
+                <Button Background="#1E1E1E" CornerRadius="16" Margin="0,8"
+                        BorderThickness="0"
+                        Command="{Binding OpenStorageSettingsCommand}">
+                    <StackPanel Margin="20,16">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <Border Grid.Column="0" 
+                                    Width="40" 
+                                    Height="40" 
+                                    CornerRadius="20" 
+                                    Background="#00BCD4"
+                                    Margin="0,0,16,0">
+                                <Path Data="M19,3 L5,3 C3.9,3 3,3.9 3,5 L3,19 C3,20.1 3.9,21 5,21 L19,21 C20.1,21 21,20.1 21,19 L21,5 C21,3.9 20.1,3 19,3 Z M19,19 L5,19 L5,5 L19,5 L19,19 Z M12,12 L8,12 L8,14 L12,14 L12,16 L16,13 L12,10 L12,12 Z" 
+                                      Fill="White" Width="24" Height="24"/>
+                            </Border>
+                            
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Text="内部存储" Foreground="White" FontSize="16"/>
+                                <TextBlock Text="{Binding UsedStorage} / {Binding TotalStorage}" 
+                                           Foreground="#B3FFFFFF" FontSize="14" Margin="0,2,0,0"/>
+                            </StackPanel>
+                            
+                            <Path Grid.Column="2" 
+                                  Data="M9.29,6.71 L10.71,5.29 L17.41,12 L10.71,18.71 L9.29,17.29 L14.59,12 L9.29,6.71 Z"
+                                  Fill="#80FFFFFF" Width="24" Height="24"/>
+                        </Grid>
+                        
+                        <ProgressBar Value="{Binding StorageUsagePercent}" 
+                                     Maximum="100"
+                                     Height="8"
+                                     Margin="0,16,0,0"
+                                     Background="#33FFFFFF"
+                                     Foreground="#00BCD4"/>
+                        
+                        <TextBlock Text="{Binding AvailableStorage, StringFormat='可用空间：{0}'}" 
+                                   Foreground="#B3FFFFFF" 
+                                   FontSize="12" 
+                                   Margin="0,8,0,0"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- 电池 -->
+                <TextBlock Text="电池" Foreground="#B3FFFFFF" FontSize="14" Margin="0,24,0,8"/>
+
+                <Border Background="#1E1E1E" CornerRadius="16" Margin="0,8">
+                    <StackPanel>
+                        <!-- 电池状态 -->
+                        <Grid Margin="20,16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <Border Grid.Column="0" 
+                                    Width="40" 
+                                    Height="40" 
+                                    CornerRadius="20" 
+                                    Background="#4CAF50"
+                                    Margin="0,0,16,0">
+                                <Path Data="M15.67,4 L14,4 L14,2 L10,2 L10,4 L8.33,4 C7.6,4 7,4.6 7,5.33 L7,20.67 C7,21.4 7.6,22 8.33,22 L15.67,22 C16.4,22 17,21.4 17,20.67 L17,5.33 C17,4.6 16.4,4 15.67,4 Z"
+                                      Fill="White" Width="24" Height="24"/>
+                            </Border>
+                            
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding BatteryLevel, StringFormat='{}{0}%'}" Foreground="White" FontSize="24" FontWeight="Medium"/>
+                                <TextBlock Text="预计可用 12 小时" Foreground="#B3FFFFFF" FontSize="14" Margin="0,2,0,0"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <Rectangle Height="1" Fill="#33FFFFFF" Margin="20,0"/>
+
+                        <!-- 省电模式 -->
+                        <Button Background="Transparent" 
+                                BorderThickness="0" 
+                                Padding="20,16"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding TogglePowerSavingCommand}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Border Grid.Column="0" 
+                                        Width="40" 
+                                        Height="40" 
+                                        CornerRadius="20" 
+                                        Background="{Binding IsPowerSavingEnabled, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#FF9800|#757575'}">
+                                    <Path Data="M11,21 L13,21 L13,19 L11,19 L11,21 Z M7,13 L9,13 L9,11 L7,11 L7,13 Z M11,13 L13,13 L13,11 L11,11 L11,13 Z M15,13 L17,13 L17,11 L15,11 L15,13 Z M7,17 L9,17 L9,15 L7,15 L7,17 Z M11,17 L13,17 L13,15 L11,15 L11,17 Z M15,17 L17,17 L17,15 L15,15 L15,17 Z M7,9 L9,9 L9,7 L7,7 L7,9 Z M11,9 L13,9 L13,7 L11,7 L11,9 Z M15,9 L17,9 L17,7 L15,7 L15,9 Z M19,3 L5,3 C3.9,3 3,3.9 3,5 L3,19 C3,20.1 3.9,21 5,21 L19,21 C20.1,21 21,20.1 21,19 L21,5 C21,3.9 20.1,3 19,3 Z M19,19 L5,19 L5,5 L19,5 L19,19 Z"
+                                          Fill="White" Width="24" Height="24"/>
+                                </Border>
+                                
+                                <StackPanel Grid.Column="1" Margin="16,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock Text="省电模式" Foreground="White" FontSize="16"/>
+                                    <TextBlock Text="{Binding IsPowerSavingEnabled, Converter={StaticResource BoolToTextConverter}, ConverterParameter='已开启|已关闭'}" 
+                                               Foreground="#B3FFFFFF" FontSize="14" Margin="0,2,0,0"/>
+                                </StackPanel>
+                                
+                                <ToggleSwitch Grid.Column="2" 
+                                              IsChecked="{Binding IsPowerSavingEnabled}"
+                                              IsHitTestVisible="False"/>
+                            </Grid>
+                        </Button>
+                    </StackPanel>
+                </Border>
+
+                <!-- 应用 -->
+                <TextBlock Text="应用" Foreground="#B3FFFFFF" FontSize="14" Margin="0,24,0,8"/>
+
+                <Border Background="#1E1E1E" CornerRadius="16" Margin="0,8">
+                    <StackPanel>
+                        <!-- 已安装应用 -->
+                        <Button Background="Transparent" 
+                                BorderThickness="0" 
+                                Padding="20,16"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding OpenInstalledAppsCommand}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Border Grid.Column="0" 
+                                        Width="40" 
+                                        Height="40" 
+                                        CornerRadius="20" 
+                                        Background="#9C27B0"
+                                        Margin="0,0,16,0">
+                                    <Path Data="M4,8 L4,16 C4,17.1 4.9,18 6,18 L18,18 C19.1,18 20,17.1 20,16 L20,8 C20,6.9 19.1,6 18,6 L6,6 C4.9,6 4,6.9 4,8 Z M6,8 L18,8 L18,16 L6,16 L6,8 Z M8,20 L16,20 L16,22 L8,22 L8,20 Z M10,2 L14,2 L14,4 L10,4 L10,2 Z" 
+                                          Fill="White" Width="24" Height="24"/>
+                                </Border>
+                                
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock Text="已安装应用" Foreground="White" FontSize="16"/>
+                                    <TextBlock Text="{Binding InstalledAppsCount, StringFormat='{}{0} 个应用'}" 
+                                               Foreground="#B3FFFFFF" FontSize="14" Margin="0,2,0,0"/>
+                                </StackPanel>
+                                
+                                <Path Grid.Column="2" 
+                                      Data="M9.29,6.71 L10.71,5.29 L17.41,12 L10.71,18.71 L9.29,17.29 L14.59,12 L9.29,6.71 Z"
+                                      Fill="#80FFFFFF" Width="24" Height="24"/>
+                            </Grid>
+                        </Button>
+
+                        <Rectangle Height="1" Fill="#33FFFFFF" Margin="76,0,0,0"/>
+
+                        <!-- 正在运行 -->
+                        <Button Background="Transparent" 
+                                BorderThickness="0" 
+                                Padding="20,16"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding OpenRunningAppsCommand}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Border Grid.Column="0" 
+                                        Width="40" 
+                                        Height="40" 
+                                        CornerRadius="20" 
+                                        Background="#FF5722"
+                                        Margin="0,0,16,0">
+                                    <Path Data="M13,3 L11,3 L11,13 L13,13 L13,3 Z M17.03,6.39 L15.62,7.8 C16.77,8.95 17.54,10.5 17.54,12.25 C17.54,15.68 14.77,18.5 11.29,18.5 C7.8,18.5 5.03,15.68 5.03,12.25 C5.03,10.5 5.8,8.95 6.95,7.8 L5.54,6.39 C4.09,7.84 3.21,9.79 3.21,12 C3.21,16.42 6.71,20 11.29,20 C15.87,20 19.37,16.42 19.37,12 C19.37,9.79 18.48,7.84 17.03,6.39 Z" 
+                                          Fill="White" Width="24" Height="24"/>
+                                </Border>
+                                
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock Text="正在运行" Foreground="White" FontSize="16"/>
+                                    <TextBlock Text="{Binding RunningAppsCount, StringFormat='{}{0} 个应用'}" 
+                                               Foreground="#B3FFFFFF" FontSize="14" Margin="0,2,0,0"/>
+                                </StackPanel>
+                                
+                                <Path Grid.Column="2" 
+                                      Data="M9.29,6.71 L10.71,5.29 L17.41,12 L10.71,18.71 L9.29,17.29 L14.59,12 L9.29,6.71 Z"
+                                      Fill="#80FFFFFF" Width="24" Height="24"/>
+                            </Grid>
+                        </Button>
+                    </StackPanel>
+                </Border>
+
+                <!-- 安全 -->
+                <TextBlock Text="安全" Foreground="#B3FFFFFF" FontSize="14" Margin="0,24,0,8"/>
+
+                <Border Background="#1E1E1E" CornerRadius="16" Margin="0,8">
+                    <StackPanel>
+                        <!-- 指纹解锁 -->
+                        <Button Background="Transparent" 
+                                BorderThickness="0" 
+                                Padding="20,16"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ToggleFingerprintCommand}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Border Grid.Column="0" 
+                                        Width="40" 
+                                        Height="40" 
+                                        CornerRadius="20" 
+                                        Background="{Binding IsFingerprintEnabled, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#4CAF50|#757575'}">
+                                    <Path Data="M17.81,4.47 C17.73,4.47 17.65,4.47 17.58,4.49 C16.45,4.68 15.68,5.71 15.87,6.84 C16.07,7.97 17.1,8.74 18.23,8.55 C19.36,8.36 20.13,7.33 19.94,6.2 C19.77,5.17 18.85,4.47 17.81,4.47 Z M12,2 C9.25,2 7,4.25 7,7 C7,9.75 9.25,12 12,12 C14.75,12 17,9.75 17,7 C17,4.25 14.75,2 12,2 Z M12,10 C10.35,10 9,8.65 9,7 C9,5.35 10.35,4 12,4 C13.65,4 15,5.35 15,7 C15,8.65 13.65,10 12,10 Z M12,14 C8.13,14 5,17.13 5,21 L7,21 C7,18.24 9.24,16 12,16 C14.76,16 17,18.24 17,21 L19,21 C19,17.13 15.87,14 12,14 Z"
+                                          Fill="White" Width="24" Height="24"/>
+                                </Border>
+                                
+                                <StackPanel Grid.Column="1" Margin="16,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock Text="指纹解锁" Foreground="White" FontSize="16"/>
+                                    <TextBlock Text="{Binding IsFingerprintEnabled, Converter={StaticResource BoolToTextConverter}, ConverterParameter='已设置|未设置'}" 
+                                               Foreground="#B3FFFFFF" FontSize="14" Margin="0,2,0,0"/>
+                                </StackPanel>
+                                
+                                <ToggleSwitch Grid.Column="2" 
+                                              IsChecked="{Binding IsFingerprintEnabled}"
+                                              IsHitTestVisible="False"/>
+                            </Grid>
+                        </Button>
+
+                        <Rectangle Height="1" Fill="#33FFFFFF" Margin="76,0,0,0"/>
+
+                        <!-- 屏幕锁定 -->
+                        <Button Background="Transparent" 
+                                BorderThickness="0" 
+                                Padding="20,16"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ToggleScreenLockCommand}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Border Grid.Column="0" 
+                                        Width="40" 
+                                        Height="40" 
+                                        CornerRadius="20" 
+                                        Background="{Binding IsScreenLockEnabled, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#2196F3|#757575'}">
+                                    <Path Data="M18,8 L17,8 L17,6 C17,3.24 14.76,1 12,1 C9.24,1 7,3.24 7,6 L7,8 L6,8 C4.9,8 4,8.9 4,10 L4,20 C4,21.1 4.9,22 6,22 L18,22 C19.1,22 20,21.1 20,20 L20,10 C20,8.9 19.1,8 18,8 Z M12,17 C10.9,17 10,16.1 10,15 C10,13.9 10.9,13 12,13 C13.1,13 14,13.9 14,15 C14,16.1 13.1,17 12,17 Z M15.1,8 L8.9,8 L8.9,6 C8.9,4.29 10.29,2.9 12,2.9 C13.71,2.9 15.1,4.29 15.1,6 L15.1,8 Z"
+                                          Fill="White" Width="24" Height="24"/>
+                                </Border>
+                                
+                                <StackPanel Grid.Column="1" Margin="16,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock Text="屏幕锁定" Foreground="White" FontSize="16"/>
+                                    <TextBlock Text="{Binding IsScreenLockEnabled, Converter={StaticResource BoolToTextConverter}, ConverterParameter='已开启|已关闭'}" 
+                                               Foreground="#B3FFFFFF" FontSize="14" Margin="0,2,0,0"/>
+                                </StackPanel>
+                                
+                                <ToggleSwitch Grid.Column="2" 
+                                              IsChecked="{Binding IsScreenLockEnabled}"
+                                              IsHitTestVisible="False"/>
+                            </Grid>
+                        </Button>
+                    </StackPanel>
+                </Border>
+
+                <!-- 系统 -->
+                <TextBlock Text="系统" Foreground="#B3FFFFFF" FontSize="14" Margin="0,24,0,8"/>
+
+                <Border Background="#1E1E1E" CornerRadius="16" Margin="0,8">
+                    <StackPanel>
+                        <!-- 系统更新 -->
+                        <Button Background="Transparent" 
+                                BorderThickness="0" 
+                                Padding="20,16"
+                                HorizontalAlignment="Stretch"
+                                Click="OnSystemUpdateClick">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Border Grid.Column="0" 
+                                        Width="40" 
+                                        Height="40" 
+                                        CornerRadius="20" 
+                                        Background="#4CAF50">
+                                    <Path Data="M12,16.5 L12,4.5 M7.5,9 L12,4.5 L16.5,9 M4,17.5 L4,19.5 C4,20.05 4.45,20.5 5,20.5 L19,20.5 C19.55,20.5 20,20.05 20,19.5 L20,17.5"
+                                          Fill="Transparent" Stroke="White" StrokeThickness="2" Width="24" Height="24"/>
+                                </Border>
+                                
+                                <StackPanel Grid.Column="1" Margin="16,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock Text="系统更新" Foreground="White" FontSize="16"/>
+                                    <TextBlock Text="已是最新版本" Foreground="#B3FFFFFF" FontSize="14" Margin="0,2,0,0"/>
+                                </StackPanel>
+                                
+                                <Path Grid.Column="2" 
+                                      Data="M9.29,6.71 L10.71,5.29 L17.41,12 L10.71,18.71 L9.29,17.29 L14.59,12 L9.29,6.71 Z"
+                                      Fill="#80FFFFFF" Width="24" Height="24"/>
+                            </Grid>
+                        </Button>
+
+                        <Border Height="1" Background="#33FFFFFF" Margin="20,0"/>
+
+                        <!-- 关于设备 -->
+                        <Button Background="Transparent" 
+                                BorderThickness="0" 
+                                Padding="20,16"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding OpenAboutDeviceCommand}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Border Grid.Column="0" 
+                                        Width="40" 
+                                        Height="40" 
+                                        CornerRadius="20" 
+                                        Background="#FF5722">
+                                    <Path Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,20 C7.59,20 4,16.41 4,12 C4,7.59 7.59,4 12,4 C16.41,4 20,7.59 20,12 C20,16.41 16.41,20 12,20 Z M11,15 L13,15 L13,17 L11,17 L11,15 Z M11,7 L13,7 L13,13 L11,13 L11,7 Z"
+                                          Fill="White" Width="24" Height="24"/>
+                                </Border>
+                                
+                                <StackPanel Grid.Column="1" Margin="16,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock Text="关于设备" Foreground="White" FontSize="16"/>
+                                    <TextBlock Text="Android 16" Foreground="#B3FFFFFF" FontSize="14" Margin="0,2,0,0"/>
+                                </StackPanel>
+                                
+                                <Path Grid.Column="2" 
+                                      Data="M9.29,6.71 L10.71,5.29 L17.41,12 L10.71,18.71 L9.29,17.29 L14.59,12 L9.29,6.71 Z"
+                                      Fill="#80FFFFFF" Width="24" Height="24"/>
+                            </Grid>
+                        </Button>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

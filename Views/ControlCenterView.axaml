@@ -1,0 +1,214 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:AndroidPadSimulator.ViewModels"
+             x:Class="AndroidPadSimulator.Views.ControlCenterView"
+             x:DataType="vm:ControlCenterViewModel">
+
+    <Grid Background="#E6000000">
+        <!-- 背景模糊效果 - 点击背景关闭控制中心 -->
+        <Rectangle Fill="#CC1a1a1a"
+                   PointerPressed="OnBackgroundPressed"
+                   PointerReleased="OnBackgroundReleased"/>
+        
+        <!-- 内容区域 - 阻止事件冒泡 -->
+        <Grid Margin="20,40,20,20"
+              PointerPressed="OnContentPressed"
+              PointerMoved="OnControlCenterMoved"
+              PointerReleased="OnControlCenterReleased">
+
+        <Grid Margin="20,40,20,20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- 顶部快捷设置网格 (2x4) -->
+            <UniformGrid Grid.Row="0" Columns="4" Rows="2" Margin="0,0,0,16">
+                <!-- WiFi -->
+                <Border Margin="6" Height="72" CornerRadius="16" Background="{Binding WifiColor}">
+                    <Grid>
+                        <Path Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,20 C7.59,20 4,16.41 4,12 C4,7.59 7.59,4 12,4 C16.41,4 20,7.59 20,12 C20,16.41 16.41,20 12,20 Z M12,6 C9.79,6 8,7.79 8,10 L10,10 C10,8.9 10.9,8 12,8 C13.1,8 14,8.9 14,10 L16,10 C16,7.79 14.21,6 12,6 Z"
+                              Fill="White" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-8,0,0"/>
+                        <TextBlock Text="WLAN" Foreground="White" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,10"/>
+                    </Grid>
+                </Border>
+                <!-- 蓝牙 -->
+                <Border Margin="6" Height="72" CornerRadius="16" Background="{Binding BluetoothColor}">
+                    <Grid>
+                        <Path Data="M17.71,7.71 L12,2 L11,2 L11,9.59 L6.41,5 L5,6.41 L10.59,12 L5,17.59 L6.41,19 L11,14.41 L11,22 L12,22 L17.71,16.29 L13.41,12 L17.71,7.71 Z M13,5.83 L15.17,8 L13,10.17 L13,5.83 Z M13,18.17 L13,13.83 L15.17,16 L13,18.17 Z"
+                              Fill="White" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-8,0,0"/>
+                        <TextBlock Text="蓝牙" Foreground="White" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,10"/>
+                    </Grid>
+                </Border>
+                <!-- 移动数据 -->
+                <Border Margin="6" Height="72" CornerRadius="16" Background="{Binding MobileDataColor}">
+                    <Grid>
+                        <Path Data="M2,18 L6,18 L6,22 L2,22 Z M7,16 L11,16 L11,22 L7,22 Z M12,12 L16,12 L16,22 L12,22 Z M17,8 L21,8 L21,22 L17,22 Z"
+                              Fill="White" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-8,0,0"/>
+                        <TextBlock Text="移动数据" Foreground="White" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,10"/>
+                    </Grid>
+                </Border>
+                <!-- 飞行模式 -->
+                <Border Margin="6" Height="72" CornerRadius="16" Background="{Binding AirplaneColor}">
+                    <Grid>
+                        <Path Data="M21,16 L15,12 L15,5 L21,16 Z M10.44,8.17 L5.41,3.14 L4,4.55 L9.03,9.58 L10.44,8.17 Z M21.71,18.88 L20.29,20.29 L16.41,16.41 L13,19.83 L13,14.17 L6.41,20.76 L5,19.35 L12.59,11.76 L12.59,5 L15.29,7.71 L15.29,11.76 L18.88,15.35 L21.71,18.88 Z"
+                              Fill="White" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-8,0,0"/>
+                        <TextBlock Text="飞行模式" Foreground="White" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,10"/>
+                    </Grid>
+                </Border>
+                <!-- 手电筒 -->
+                <Border Margin="6" Height="72" CornerRadius="16" Background="{Binding FlashlightColor}">
+                    <Grid>
+                        <Path Data="M6,2 L18,2 L16,8 L20,8 L14,22 L14,12 L10,12 L10,22 L4,8 L8,8 L6,2 Z"
+                              Fill="White" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-8,0,0"/>
+                        <TextBlock Text="手电筒" Foreground="White" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,10"/>
+                    </Grid>
+                </Border>
+                <!-- 自动旋转 -->
+                <Border Margin="6" Height="72" CornerRadius="16" Background="{Binding RotationColor}">
+                    <Grid>
+                        <Path Data="M16.48,2.52 C16.48,2.52 15.64,1.68 15.64,1.68 C15.64,1.68 19.07,5.11 19.07,5.11 C19.07,5.11 20,4.18 20,4.18 C20,4.18 20,9 20,9 C20,9 15.18,9 15.18,9 C15.18,9 16.11,8.07 16.11,8.07 C16.11,8.07 12.68,4.64 12.68,4.64 C12.68,4.64 11.84,5.48 11.84,5.48 C11.84,5.48 16.48,10.12 16.48,10.12 C16.48,10.12 17.31,9.29 17.31,9.29 C17.31,9.29 18.15,10.13 18.15,10.13 C18.15,10.13 18.15,18.15 18.15,18.15 C18.15,19.18 17.33,20 16.3,20 C16.3,20 7.7,20 7.7,20 C6.67,20 5.85,19.18 5.85,18.15 C5.85,18.15 5.85,5.85 5.85,5.85 C5.85,4.82 6.67,4 7.7,4 C7.7,4 11.05,4 11.05,4 C11.05,4 11.89,3.16 11.89,3.16 C11.89,3.16 7.7,3.16 7.7,3.16 C5.66,3.16 4,4.82 4,6.86 C4,6.86 4,17.14 4,17.14 C4,19.18 5.66,20.84 7.7,20.84 C7.7,20.84 16.3,20.84 16.3,20.84 C18.34,20.84 20,19.18 20,17.14 C20,17.14 20,11.63 20,11.63 C20,11.63 16.48,7.11 16.48,7.11 C16.48,7.11 16.48,2.52 16.48,2.52 Z"
+                              Fill="White" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-8,0,0"/>
+                        <TextBlock Text="自动旋转" Foreground="White" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,10"/>
+                    </Grid>
+                </Border>
+                <!-- 定位 -->
+                <Border Margin="6" Height="72" CornerRadius="16" Background="{Binding LocationColor}">
+                    <Grid>
+                        <Path Data="M12,2 C8.13,2 5,5.13 5,9 C5,14.25 12,22 12,22 C12,22 19,14.25 19,9 C19,5.13 15.87,2 12,2 Z M12,11.5 C10.62,11.5 9.5,10.38 9.5,9 C9.5,7.62 10.62,6.5 12,6.5 C13.38,6.5 14.5,7.62 14.5,9 C14.5,10.38 13.38,11.5 12,11.5 Z"
+                              Fill="White" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-8,0,0"/>
+                        <TextBlock Text="定位" Foreground="White" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,10"/>
+                    </Grid>
+                </Border>
+                <!-- NFC -->
+                <Border Margin="6" Height="72" CornerRadius="16" Background="{Binding NfcColor}">
+                    <Grid>
+                        <Path Data="M20,2 L4,2 C2.9,2 2,2.9 2,4 L2,20 C2,21.1 2.9,22 4,22 L20,22 C21.1,22 22,21.1 22,20 L22,4 C22,2.9 21.1,2 20,2 Z M20,20 L4,20 L4,4 L20,4 L20,20 Z M6,18 L8,18 L8,12 L6,12 L6,18 Z M10,18 L12,18 L12,10 L10,10 L10,18 Z M14,18 L16,18 L16,8 L14,8 L14,18 Z M18,18 L20,18 L20,6 L18,6 L18,18 Z"
+                              Fill="White" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-8,0,0"/>
+                        <TextBlock Text="NFC" Foreground="White" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,10"/>
+                    </Grid>
+                </Border>
+            </UniformGrid>
+
+            <!-- 亮度调节 -->
+            <Border Grid.Row="1" Margin="6,8" Height="56" CornerRadius="28" Background="#30FFFFFF">
+                <Grid Margin="16,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Path Grid.Column="0" Data="M20,8.69 L20,4 L15.31,4 L12,0.69 L8.69,4 L4,4 L4,8.69 L0.69,12 L4,15.31 L4,20 L8.69,20 L12,23.31 L15.31,20 L20,20 L20,15.31 L23.31,12 L20,8.69 Z M12,18 C8.69,18 6,15.31 6,12 C6,8.69 8.69,6 12,6 C15.31,6 18,8.69 18,12 C18,15.31 15.31,18 12,18 Z M12,8 C9.79,8 8,9.79 8,12 C8,14.21 9.79,16 12,16 C14.21,16 16,14.21 16,12 C16,9.79 14.21,8 12,8 Z"
+                          Fill="White" Width="20" Height="20"/>
+                    <Slider Grid.Column="1" Value="{Binding Brightness}" Minimum="0" Maximum="100" Margin="12,0"/>
+                    <Path Grid.Column="2" Data="M20,8.69 L20,4 L15.31,4 L12,0.69 L8.69,4 L4,4 L4,8.69 L0.69,12 L4,15.31 L4,20 L8.69,20 L12,23.31 L15.31,20 L20,20 L20,15.31 L23.31,12 L20,8.69 Z M12,18 C8.69,18 6,15.31 6,12 C6,8.69 8.69,6 12,6 C15.31,6 18,8.69 18,12 C18,15.31 15.31,18 12,18 Z M12,8 C9.79,8 8,9.79 8,12 C8,14.21 9.79,16 12,16 C14.21,16 16,14.21 16,12 C16,9.79 14.21,8 12,8 Z"
+                          Fill="White" Width="20" Height="20"/>
+                </Grid>
+            </Border>
+
+            <!-- 音量调节 -->
+            <Border Grid.Row="2" Margin="6,8" Height="56" CornerRadius="28" Background="#30FFFFFF">
+                <Grid Margin="16,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Path Grid.Column="0" Data="M3,9 L3,15 L7,15 L12,20 L12,4 L7,9 L3,9 Z M16.5,12 C16.5,10.23 15.48,8.71 14,7.97 L14,16.02 C15.48,15.29 16.5,13.77 16.5,12 Z M14,3.23 L14,5.29 C16.89,6.15 19,8.83 19,12 C19,15.17 16.89,17.85 14,18.71 L14,20.77 C18.01,19.86 21,16.28 21,12 C21,7.72 18.01,4.14 14,3.23 Z"
+                          Fill="White" Width="20" Height="20"/>
+                    <Slider Grid.Column="1" Value="{Binding Volume}" Minimum="0" Maximum="100" Margin="12,0"/>
+                    <Path Grid.Column="2" Data="M3,9 L3,15 L7,15 L12,20 L12,4 L7,9 L3,9 Z M16.5,12 C16.5,10.23 15.48,8.71 14,7.97 L14,16.02 C15.48,15.29 16.5,13.77 16.5,12 Z M14,3.23 L14,5.29 C16.89,6.15 19,8.83 19,12 C19,15.17 16.89,17.85 14,18.71 L14,20.77 C18.01,19.86 21,16.28 21,12 C21,7.72 18.01,4.14 14,3.23 Z"
+                          Fill="White" Width="20" Height="20"/>
+                </Grid>
+            </Border>
+
+            <!-- 媒体控制卡片 -->
+            <Border Grid.Row="3" Margin="6,16" Height="100" CornerRadius="16" Background="#30FFFFFF">
+                <Grid Margin="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- 专辑封面 -->
+                    <Border Grid.Column="0" Width="68" Height="68" CornerRadius="8" Background="#FF5722">
+                        <Path Data="M12,3 L12,13.55 C11.41,13.21 10.73,13 10,13 C7.79,13 6,14.79 6,17 C6,19.21 7.79,21 10,21 C12.21,21 14,19.21 14,17 L14,7 L18,7 L18,3 L12,3 Z"
+                              Fill="White" Width="32" Height="32" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+
+                    <!-- 歌曲信息 -->
+                    <StackPanel Grid.Column="1" Margin="16,0" VerticalAlignment="Center">
+                        <TextBlock Text="未知歌曲" Foreground="White" FontSize="16" FontWeight="Medium"/>
+                        <TextBlock Text="未知艺术家" Foreground="#B3FFFFFF" FontSize="14" Margin="0,4,0,0"/>
+                    </StackPanel>
+
+                    <!-- 播放控制 -->
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="16" VerticalAlignment="Center">
+                        <Path Data="M6,6 L6,18 L14,12 L6,6 Z M16,6 L16,18 L18,18 L18,6 L16,6 Z"
+                              Fill="White" Width="28" Height="28"/>
+                        <Path Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M10,16.5 L10,7.5 L16,12 L10,16.5 Z"
+                              Fill="White" Width="40" Height="40"/>
+                        <Path Data="M6,18 L14,12 L6,6 L6,18 Z M16,6 L16,18 L18,18 L18,6 L16,6 Z"
+                              Fill="White" Width="28" Height="28"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- 底部快捷操作 -->
+            <Grid Grid.Row="4" VerticalAlignment="Bottom" Margin="6,16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- 设置 -->
+                <StackPanel Grid.Column="0" HorizontalAlignment="Center" Spacing="8">
+                    <Button Width="48" 
+                            Height="48" 
+                            CornerRadius="24" 
+                            Background="#30FFFFFF"
+                            BorderThickness="0"
+                            Click="OnSettingsClick">
+                        <Path Data="M19.14,12.94 C19.19,12.64 19.22,12.33 19.22,12 C19.22,11.68 19.19,11.36 19.14,11.06 L21.54,9.21 C21.74,9.05 21.8,8.77 21.68,8.55 L19.42,4.73 C19.3,4.51 19.03,4.43 18.81,4.52 L16.01,5.69 C15.51,5.3 14.97,4.97 14.39,4.72 L13.96,1.77 C13.92,1.53 13.71,1.36 13.46,1.36 L9.04,1.36 C8.79,1.36 8.58,1.53 8.54,1.77 L8.11,4.72 C7.53,4.97 6.99,5.3 6.49,5.69 L3.69,4.52 C3.46,4.43 3.19,4.51 3.07,4.73 L0.81,8.55 C0.69,8.77 0.75,9.05 0.95,9.21 L3.35,11.06 C3.3,11.36 3.27,11.68 3.27,12 C3.27,12.33 3.3,12.64 3.35,12.94 L0.95,14.79 C0.75,14.95 0.69,15.23 0.81,15.45 L3.07,19.27 C3.19,19.49 3.46,19.57 3.69,19.48 L6.49,18.31 C6.99,18.7 7.53,19.03 8.11,19.28 L8.54,22.23 C8.58,22.47 8.79,22.64 9.04,22.64 L13.46,22.64 C13.71,22.64 13.92,22.47 13.96,22.23 L14.39,19.28 C14.97,19.03 15.51,18.7 16.01,18.31 L18.81,19.48 C19.03,19.57 19.3,19.49 19.42,19.27 L21.68,15.45 C21.8,15.23 21.74,14.95 21.54,14.79 L19.14,12.94 Z M11.25,15.5 C9.46,15.5 8,14.04 8,12.25 C8,10.46 9.46,9 11.25,9 C13.04,9 14.5,10.46 14.5,12.25 C14.5,14.04 13.04,15.5 11.25,15.5 Z"
+                              Fill="White" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Button>
+                    <TextBlock Text="设置" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+                </StackPanel>
+
+                <!-- 编辑 -->
+                <StackPanel Grid.Column="1" HorizontalAlignment="Center" Spacing="8">
+                    <Border Width="48" Height="48" CornerRadius="24" Background="#30FFFFFF">
+                        <Path Data="M3,17.25 L3,21 L6.75,21 L17.81,9.94 L14.06,6.19 L3,17.25 Z M20.71,7.04 C21.1,6.65 21.1,6.02 20.71,5.63 L18.37,3.29 C17.98,2.9 17.35,2.9 16.96,3.29 L15.13,5.12 L18.88,8.87 L20.71,7.04 Z"
+                              Fill="White" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <TextBlock Text="编辑" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+                </StackPanel>
+
+                <!-- 屏幕录制 -->
+                <StackPanel Grid.Column="2" HorizontalAlignment="Center" Spacing="8">
+                    <Border Width="48" Height="48" CornerRadius="24" Background="#30FFFFFF">
+                        <Path Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,20 C7.59,20 4,16.41 4,12 C4,7.59 7.59,4 12,4 C16.41,4 20,7.59 20,12 C20,16.41 16.41,20 12,20 Z M12,6 C8.69,6 6,8.69 6,12 C6,15.31 8.69,18 12,18 C15.31,18 18,15.31 18,12 C18,8.69 15.31,6 12,6 Z"
+                              Fill="White" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <TextBlock Text="屏幕录制" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+                </StackPanel>
+
+                <!-- 钱包 -->
+                <StackPanel Grid.Column="3" HorizontalAlignment="Center" Spacing="8">
+                    <Border Width="48" Height="48" CornerRadius="24" Background="#30FFFFFF">
+                        <Path Data="M21,18 L21,19 C21,20.1 20.1,21 19,21 L5,21 C3.9,21 3,20.1 3,19 L3,5 C3,3.9 3.9,3 5,3 L19,3 C20.1,3 21,3.9 21,5 L21,6 L12,6 C10.9,6 10,6.9 10,8 L10,16 C10,17.1 10.9,18 12,18 L21,18 Z M12,16 L22,16 L22,8 L12,8 L12,16 Z M16,13.5 C16.83,13.5 17.5,12.83 17.5,12 C17.5,11.17 16.83,10.5 16,10.5 C15.17,10.5 14.5,11.17 14.5,12 C14.5,12.83 15.17,13.5 16,13.5 Z"
+                              Fill="White" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <TextBlock Text="钱包" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</Grid>
+</UserControl>

@@ -1,0 +1,290 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:AndroidPadSimulator.ViewModels"
+             x:Class="AndroidPadSimulator.Views.ChromeView"
+             x:DataType="vm:ChromeViewModel">
+
+    <Grid Background="#FF121212">
+        <!-- 顶部状态栏 -->
+        <Grid VerticalAlignment="Top" Margin="24,16,24,0" Height="40">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- 返回按钮 -->
+            <Button Grid.Column="0"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Width="40"
+                    Height="40"
+                    Command="{Binding GoBackCommand}">
+                <Path Data="M20,11 L7.83,11 L13.42,5.41 L12,4 L4,12 L12,20 L13.41,18.59 L7.83,13 L20,13 L20,11 Z"
+                      Fill="White" Width="24" Height="24"/>
+            </Button>
+
+            <!-- 标题 -->
+            <TextBlock Grid.Column="1"
+                       Text="Chrome"
+                       Foreground="White"
+                       FontSize="18"
+                       FontWeight="SemiBold"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"/>
+
+            <!-- 状态图标 -->
+            <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="10">
+                <Path Data="M2,18 L6,18 L6,22 L2,22 Z M7,16 L11,16 L11,22 L7,22 Z M12,12 L16,12 L16,22 L12,22 Z M17,8 L21,8 L21,22 L17,22 Z"
+                      Fill="White" Width="16" Height="16"/>
+                <Path Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,20 C7.59,20 4,16.41 4,12 C4,7.59 7.59,4 12,4 C16.41,4 20,7.59 20,12 C20,16.41 16.41,20 12,20 Z M12,6 C9.79,6 8,7.79 8,10 L10,10 C10,8.9 10.9,8 12,8 C13.1,8 14,8.9 14,10 L16,10 C16,7.79 14.21,6 12,6 Z"
+                      Fill="White" Width="16" Height="16"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- 地址栏 -->
+        <Grid Margin="16,72,16,0" Height="48">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Width="40"
+                    Height="40"
+                    IsEnabled="False">
+                <Path Data="M15.41,7.41 L14,6 L8,12 L14,18 L15.41,16.59 L10.83,12 L15.41,7.41 Z"
+                      Fill="#80FFFFFF" Width="24" Height="24"/>
+            </Button>
+
+            <Button Grid.Column="1"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Width="40"
+                    Height="40"
+                    IsEnabled="False">
+                <Path Data="M8.59,16.59 L13.17,12 L8.59,7.41 L10,6 L16,12 L10,18 L8.59,16.59 Z"
+                      Fill="#80FFFFFF" Width="24" Height="24"/>
+            </Button>
+
+            <Border Grid.Column="2"
+                    Background="#2A2A2A"
+                    CornerRadius="24"
+                    Height="40"
+                    Margin="8,0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Path Grid.Column="0"
+                          Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,20 C7.59,20 4,16.41 4,12 C4,7.59 7.59,4 12,4 C16.41,4 20,7.59 20,12 C20,16.41 16.41,20 12,20 Z M12,6 C8.69,6 6,8.69 6,12 C6,15.31 8.69,18 12,18 C15.31,18 18,15.31 18,12 C18,8.69 15.31,6 12,6 Z"
+                          Fill="#80FFFFFF" Width="20" Height="20" Margin="12,0,0,0"/>
+
+                    <TextBox Grid.Column="1"
+                             Text="{Binding Url}"
+                             Background="Transparent"
+                             Foreground="White"
+                             BorderThickness="0"
+                             VerticalAlignment="Center"
+                             FontSize="14"/>
+
+                    <Button Grid.Column="2"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Width="36"
+                            Height="36"
+                            Command="{Binding NavigateCommand}">
+                        <Path Data="M8.59,16.59 L13.17,12 L8.59,7.41 L10,6 L16,12 L10,18 L8.59,16.59 Z"
+                              Fill="White" Width="20" Height="20"/>
+                    </Button>
+                </Grid>
+            </Border>
+
+            <Button Grid.Column="3"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Width="40"
+                    Height="40"
+                    Command="{Binding RefreshCommand}">
+                <Path Data="M17.65,6.35 C16.2,4.9 14.21,4 12,4 C7.58,4 4.01,7.58 4.01,12 C4.01,16.42 7.58,20 12,20 C15.73,20 18.84,17.45 19.73,14 L17.65,14 C16.83,16.33 14.61,18 12,18 C8.69,18 6,15.31 6,12 C6,8.69 8.69,6 12,6 C13.66,6 15.14,6.69 16.22,7.78 L13,11 L20,11 L20,4 L17.65,6.35 Z"
+                      Fill="White" Width="24" Height="24"/>
+            </Button>
+
+            <Button Grid.Column="4"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Width="40"
+                    Height="40"
+                    Command="{Binding ToggleBookmarksCommand}">
+                <Path Data="M12,17.27 L18.18,21 L16.54,13.97 L22,9.24 L14.81,8.62 L12,2 L9.19,8.62 L2,9.24 L7.45,13.97 L5.82,21 L12,17.27 Z"
+                      Fill="White" Width="24" Height="24"/>
+            </Button>
+        </Grid>
+
+        <!-- 标签页 -->
+        <ScrollViewer Margin="16,128,16,0" 
+                      HorizontalScrollBarVisibility="Auto"
+                      VerticalScrollBarVisibility="Disabled"
+                      Height="40">
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <ItemsControl ItemsSource="{Binding Tabs}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" Spacing="8"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Background="{Binding IsActive, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#3A3A3A|#2A2A2A'}"
+                                    CornerRadius="16"
+                                    Height="32"
+                                    Padding="12,0"
+                                    BorderThickness="0"
+                                    Command="{Binding $parent[UserControl].DataContext.SelectTabCommand}"
+                                    CommandParameter="{Binding}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" 
+                                               Text="{Binding Title}" 
+                                               Foreground="White" 
+                                               FontSize="12"
+                                               VerticalAlignment="Center"/>
+                                    <Button Grid.Column="1"
+                                            Background="Transparent"
+                                            BorderThickness="0"
+                                            Width="20"
+                                            Height="20"
+                                            Margin="8,0,0,0"
+                                            Command="{Binding $parent[UserControl].DataContext.CloseTabCommand}"
+                                            CommandParameter="{Binding}">
+                                        <Path Data="M19,6.41 L17.59,5 L12,10.59 L6.41,5 L5,6.41 L10.59,12 L5,17.59 L6.41,19 L12,13.41 L17.59,19 L19,17.59 L13.41,12 L19,6.41 Z"
+                                              Fill="#80FFFFFF" Width="14" Height="14"/>
+                                    </Button>
+                                </Grid>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <Button Background="#2A2A2A"
+                        CornerRadius="16"
+                        Width="32"
+                        Height="32"
+                        BorderThickness="0"
+                        Command="{Binding NewTabCommand}">
+                    <Path Data="M19,13 L13,13 L13,19 L11,19 L11,13 L5,13 L5,11 L11,11 L11,5 L13,5 L13,11 L19,11 L19,13 Z"
+                          Fill="White" Width="20" Height="20"/>
+                </Button>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- 网页内容区域 -->
+        <Grid Margin="16,176,16,16" Background="#1A1A1A">
+            <Grid IsVisible="{Binding !IsLoading}">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Path Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,20 C7.59,20 4,16.41 4,12 C4,7.59 7.59,4 12,4 C16.41,4 20,7.59 20,12 C20,16.41 16.41,20 12,20 Z M12,6 C8.69,6 6,8.69 6,12 C6,15.31 8.69,18 12,18 C15.31,18 18,15.31 18,12 C18,8.69 15.31,6 12,6 Z"
+                          Fill="#4285F4" Width="80" Height="80"/>
+                    <TextBlock Text="{Binding PageTitle}" 
+                               Foreground="White" 
+                               FontSize="24" 
+                               FontWeight="SemiBold"
+                               HorizontalAlignment="Center"
+                               Margin="0,24,0,0"/>
+                    <TextBlock Text="{Binding Url}" 
+                               Foreground="#80FFFFFF" 
+                               FontSize="14"
+                               HorizontalAlignment="Center"
+                               Margin="0,8,0,0"/>
+                </StackPanel>
+            </Grid>
+
+            <!-- 加载指示器 -->
+            <Grid IsVisible="{Binding IsLoading}"
+                  VerticalAlignment="Center"
+                  HorizontalAlignment="Center">
+                <TextBlock Text="加载中..." Foreground="White" FontSize="16"/>
+            </Grid>
+        </Grid>
+
+        <!-- 书签面板 -->
+        <Grid IsVisible="{Binding ShowBookmarks}"
+              Background="#CC000000"
+              Margin="0,72,0,0">
+            <Border Background="#2A2A2A"
+                    CornerRadius="16"
+                    Width="400"
+                    Height="500"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0"
+                               Text="书签"
+                               Foreground="White"
+                               FontSize="20"
+                               FontWeight="SemiBold"
+                               Margin="20,16"/>
+
+                    <ScrollViewer Grid.Row="1" Margin="16,0,16,16">
+                        <WrapPanel Orientation="Horizontal">
+                            <ItemsControl ItemsSource="{Binding Bookmarks}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Button Background="#3A3A3A"
+                                                CornerRadius="12"
+                                                Width="100"
+                                                Height="100"
+                                                Margin="8"
+                                                BorderThickness="0"
+                                                Command="{Binding $parent[UserControl].DataContext.NavigateToBookmarkCommand}"
+                                                CommandParameter="{Binding}">
+                                            <StackPanel HorizontalAlignment="Center">
+                                                <Border Width="40"
+                                                        Height="40"
+                                                        CornerRadius="20"
+                                                        Background="{Binding IconColor}">
+                                                    <TextBlock Text="{Binding Title, Converter={StaticResource FirstCharConverter}}"
+                                                               Foreground="White"
+                                                               FontSize="18"
+                                                               FontWeight="SemiBold"
+                                                               HorizontalAlignment="Center"
+                                                               VerticalAlignment="Center"/>
+                                                </Border>
+                                                <TextBlock Text="{Binding Title}"
+                                                           Foreground="White"
+                                                           FontSize="12"
+                                                           HorizontalAlignment="Center"
+                                                           Margin="0,8,0,0"
+                                                           TextTrimming="CharacterEllipsis"/>
+                                            </StackPanel>
+                                        </Button>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </WrapPanel>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

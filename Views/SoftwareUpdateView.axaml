@@ -1,0 +1,241 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:AndroidPadSimulator.ViewModels"
+             x:Class="AndroidPadSimulator.Views.SoftwareUpdateView"
+             x:DataType="vm:SoftwareUpdateViewModel">
+
+    <Grid Background="#FF121212">
+        <!-- 顶部导航栏 -->
+        <Grid Height="56" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <!-- 返回按钮 -->
+            <Button Grid.Column="0" 
+                    Width="48" 
+                    Height="48"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Margin="8,0,0,0"
+                    Command="{Binding GoBackCommand}">
+                <Path Data="M20,11 L7.83,11 L13.42,5.41 L12,4 L4,12 L12,20 L13.41,18.59 L7.83,13 L20,13 L20,11 Z"
+                      Fill="White" Width="24" Height="24"/>
+            </Button>
+            
+            <TextBlock Grid.Column="1" 
+                       Text="系统更新" 
+                       Foreground="White" 
+                       FontSize="20" 
+                       FontWeight="Medium"
+                       VerticalAlignment="Center"
+                       Margin="16,0"/>
+        </Grid>
+
+        <!-- 内容区域 -->
+        <ScrollViewer Margin="0,56,0,0">
+            <StackPanel Margin="24,16">
+                <!-- 当前版本信息 -->
+                <Border Background="#1E1E1E" 
+                        CornerRadius="16" 
+                        Padding="24,20"
+                        Margin="0,0,0,16">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Android 16" 
+                                       Foreground="White" 
+                                       FontSize="24" 
+                                       FontWeight="Medium"/>
+                            <TextBlock Text="当前版本" 
+                                       Foreground="#B3FFFFFF" 
+                                       FontSize="14"
+                                       Margin="0,4,0,0"/>
+                            <TextBlock Text="BP22.250103.008" 
+                                       Foreground="#B3FFFFFF" 
+                                       FontSize="14"/>
+                        </StackPanel>
+                        
+                        <Border Grid.Column="1" 
+                                Width="64" 
+                                Height="64" 
+                                CornerRadius="16" 
+                                Background="#4CAF50">
+                            <TextBlock Text="16" 
+                                       Foreground="White" 
+                                       FontSize="32" 
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <!-- 更新状态 -->
+                <Border Background="#1E1E1E" 
+                        CornerRadius="16" 
+                        Padding="24,20"
+                        Margin="0,0,0,16">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="{Binding UpdateStatus}" 
+                                           Foreground="White" 
+                                           FontSize="18"/>
+                                <TextBlock Text="{Binding UpdateDetail}" 
+                                           Foreground="#B3FFFFFF" 
+                                           FontSize="14"
+                                           Margin="0,4,0,0"/>
+                            </StackPanel>
+                            
+                            <!-- 加载动画或图标 -->
+                            <Grid Grid.Column="1" 
+                                  Width="48" 
+                                  Height="48"
+                                  IsVisible="{Binding IsChecking}">
+                                <Ellipse Width="48" Height="48" Stroke="#33FFFFFF" StrokeThickness="3"/>
+                                <Arc Width="48" 
+                                     Height="48" 
+                                     Stroke="#4CAF50" 
+                                     StrokeThickness="3"
+                                     StartAngle="0"
+                                     SweepAngle="90"/>
+                            </Grid>
+                        </Grid>
+                        
+                        <!-- 进度条 -->
+                        <ProgressBar Value="{Binding DownloadProgress}" 
+                                     Maximum="100"
+                                     Height="4"
+                                     Margin="0,16,0,0"
+                                     Background="#33FFFFFF"
+                                     Foreground="#4CAF50"
+                                     IsVisible="{Binding IsDownloading}"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- 检查更新按钮 -->
+                <Button Background="#4CAF50"
+                        Foreground="White"
+                        FontSize="16"
+                        FontWeight="Medium"
+                        Padding="24,16"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
+                        CornerRadius="28"
+                        IsVisible="{Binding CanCheckUpdate}"
+                        Command="{Binding CheckUpdateCommand}">
+                    检查更新
+                </Button>
+
+                <!-- 下载按钮 -->
+                <Button Background="#4CAF50"
+                        Foreground="White"
+                        FontSize="16"
+                        FontWeight="Medium"
+                        Padding="24,16"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
+                        CornerRadius="28"
+                        IsVisible="{Binding CanDownload}"
+                        Command="{Binding DownloadUpdateCommand}">
+                    下载更新
+                </Button>
+
+                <!-- 安装按钮 -->
+                <Button Background="#4CAF50"
+                        Foreground="White"
+                        FontSize="16"
+                        FontWeight="Medium"
+                        Padding="24,16"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
+                        CornerRadius="28"
+                        IsVisible="{Binding CanInstall}"
+                        Command="{Binding InstallUpdateCommand}">
+                    立即安装
+                </Button>
+
+                <!-- 最新版本提示 -->
+                <Border Background="#1E1E1E" 
+                        CornerRadius="16" 
+                        Padding="24,20"
+                        Margin="0,16,0,0"
+                        IsVisible="{Binding IsUpToDate}">
+                    <StackPanel>
+                        <Path Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M10,17 L5,12 L6.41,10.59 L10,14.17 L17.59,6.58 L19,8 L10,17 Z"
+                              Fill="#4CAF50" Width="48" Height="48" HorizontalAlignment="Center"/>
+                        <TextBlock Text="系统已是最新版本" 
+                                   Foreground="White" 
+                                   FontSize="18"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,16,0,0"/>
+                        <TextBlock Text="Android 16 已安装最新安全更新" 
+                                   Foreground="#B3FFFFFF" 
+                                   FontSize="14"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- 更新日志 -->
+                <Border Background="#1E1E1E" 
+                        CornerRadius="16" 
+                        Padding="24,20"
+                        Margin="0,16,0,0">
+                    <StackPanel>
+                        <TextBlock Text="本次更新内容" 
+                                   Foreground="White" 
+                                   FontSize="18"
+                                   Margin="0,0,0,16"/>
+                        
+                        <StackPanel Spacing="12">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Ellipse Grid.Column="0" Width="8" Height="8" Fill="#4CAF50" Margin="0,6,12,0" VerticalAlignment="Top"/>
+                                <TextBlock Grid.Column="1" Text="优化系统性能和稳定性" Foreground="#E0FFFFFF" FontSize="14" TextWrapping="Wrap"/>
+                            </Grid>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Ellipse Grid.Column="0" Width="8" Height="8" Fill="#4CAF50" Margin="0,6,12,0" VerticalAlignment="Top"/>
+                                <TextBlock Grid.Column="1" Text="修复已知问题" Foreground="#E0FFFFFF" FontSize="14" TextWrapping="Wrap"/>
+                            </Grid>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Ellipse Grid.Column="0" Width="8" Height="8" Fill="#4CAF50" Margin="0,6,12,0" VerticalAlignment="Top"/>
+                                <TextBlock Grid.Column="1" Text="提升安全性" Foreground="#E0FFFFFF" FontSize="14" TextWrapping="Wrap"/>
+                            </Grid>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Ellipse Grid.Column="0" Width="8" Height="8" Fill="#4CAF50" Margin="0,6,12,0" VerticalAlignment="Top"/>
+                                <TextBlock Grid.Column="1" Text="新增功能：Material You 主题增强" Foreground="#E0FFFFFF" FontSize="14" TextWrapping="Wrap"/>
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

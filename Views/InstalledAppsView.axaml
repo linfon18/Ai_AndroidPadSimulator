@@ -1,0 +1,278 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:AndroidPadSimulator.ViewModels"
+             x:Class="AndroidPadSimulator.Views.InstalledAppsView"
+             x:DataType="vm:InstalledAppsViewModel">
+
+    <Grid Background="#FF121212">
+        <!-- 顶部状态栏 -->
+        <Grid VerticalAlignment="Top" Margin="24,16,24,0" Height="40">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- 返回按钮 -->
+            <Button Grid.Column="0"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Width="40"
+                    Height="40"
+                    Command="{Binding GoBackCommand}">
+                <Path Data="M20,11 L7.83,11 L13.42,5.41 L12,4 L4,12 L12,20 L13.41,18.59 L7.83,13 L20,13 L20,11 Z"
+                      Fill="White" Width="24" Height="24"/>
+            </Button>
+
+            <!-- 标题 -->
+            <TextBlock Grid.Column="1"
+                       Text="已安装应用"
+                       Foreground="White"
+                       FontSize="16"
+                       FontWeight="SemiBold"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"/>
+
+            <!-- 更多按钮 -->
+            <Button Grid.Column="2"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Width="40"
+                    Height="40">
+                <Path Data="M12,8 L12,16 M8,12 L16,12"
+                      Fill="White" Width="24" Height="24" Stroke="White" StrokeThickness="2"/>
+            </Button>
+        </Grid>
+
+        <!-- 内容区域 -->
+        <ScrollViewer Margin="0,72,0,0" VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="24,0,24,24" Spacing="16">
+                <!-- 应用统计 -->
+                <Border Background="#1E1E1E" 
+                        CornerRadius="16" 
+                        Padding="20" 
+                        Margin="0,16,0,0">
+                    <StackPanel>
+                        <TextBlock Text="应用统计" 
+                                   Foreground="#B3FFFFFF" 
+                                   FontSize="14" 
+                                   Margin="0,0,0,12"/>
+
+                        <StackPanel Orientation="Horizontal" 
+                                    Spacing="24">
+                            <StackPanel>
+                                <TextBlock Text="{Binding TotalApps}" 
+                                           Foreground="White" 
+                                           FontSize="20" 
+                                           FontWeight="SemiBold"/>
+                                <TextBlock Text="总应用" 
+                                           Foreground="#B3FFFFFF" 
+                                           FontSize="12" 
+                                           Margin="0,2,0,0"/>
+                            </StackPanel>
+
+                            <StackPanel>
+                                <TextBlock Text="{Binding UserApps}" 
+                                           Foreground="White" 
+                                           FontSize="20" 
+                                           FontWeight="SemiBold"/>
+                                <TextBlock Text="用户应用" 
+                                           Foreground="#B3FFFFFF" 
+                                           FontSize="12" 
+                                           Margin="0,2,0,0"/>
+                            </StackPanel>
+
+                            <StackPanel>
+                                <TextBlock Text="{Binding SystemApps}" 
+                                           Foreground="White" 
+                                           FontSize="20" 
+                                           FontWeight="SemiBold"/>
+                                <TextBlock Text="系统应用" 
+                                           Foreground="#B3FFFFFF" 
+                                           FontSize="12" 
+                                           Margin="0,2,0,0"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- 筛选和排序 -->
+                <Border Background="#1E1E1E" 
+                        CornerRadius="16" 
+                        Padding="20">
+                    <StackPanel>
+                        <TextBlock Text="筛选和排序" 
+                                   Foreground="#B3FFFFFF" 
+                                   FontSize="14" 
+                                   Margin="0,0,0,16"/>
+
+                        <!-- 排序方式 -->
+                        <Button Background="Transparent" 
+                                BorderThickness="0" 
+                                Padding="16,12" 
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ChangeSortOrderCommand}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Path Grid.Column="0" 
+                                      Data="M14,2 L14,8 M10,8 L14,8 M10,8 L10,14 M6,14 L10,14 M6,14 L6,20 M10,20 L6,20" 
+                                      Fill="White" Width="24" Height="24" Margin="0,0,16,0"/>
+
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="排序方式" 
+                                               Foreground="White" 
+                                               FontSize="16"/>
+                                    <TextBlock Text="{Binding SortBy}" 
+                                               Foreground="#80FFFFFF" 
+                                               FontSize="12" 
+                                               Margin="0,2,0,0"/>
+                                </StackPanel>
+
+                                <Path Grid.Column="2" 
+                                      Data="M9.29,6.71 L10.71,5.29 L17.41,12 L10.71,18.71 L9.29,17.29 L14.59,12 L9.29,6.71 Z" 
+                                      Fill="#80FFFFFF" Width="24" Height="24"/>
+                            </Grid>
+                        </Button>
+
+                        <!-- 显示系统应用 -->
+                        <Button Background="Transparent" 
+                                BorderThickness="0" 
+                                Padding="16,12" 
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ToggleShowSystemAppsCommand}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Path Grid.Column="0" 
+                                      Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,20 C7.59,20 4,16.41 4,12 C4,7.59 7.59,4 12,4 C16.41,4 20,7.59 20,12 C20,16.41 16.41,20 12,20 Z M12,6 C10.34,6 9,7.34 9,9 L11,9 C11,8.45 11.45,8 12,8 C12.55,8 13,8.45 13,9 L15,9 C15,7.34 13.66,6 12,6 Z M12,18 C10.34,18 9,16.66 9,15 L11,15 C11,15.55 11.45,16 12,16 C12.55,16 13,15.55 13,15 L15,15 C15,16.66 13.66,18 12,18 Z M12,10 C10.34,10 9,11.34 9,13 L11,13 C11,12.45 11.45,12 12,12 C12.55,12 13,12.45 13,13 L15,13 C15,11.34 13.66,10 12,10 Z" 
+                                      Fill="White" Width="24" Height="24" Margin="0,0,16,0"/>
+
+                                <TextBlock Grid.Column="1" 
+                                           Text="显示系统应用" 
+                                           Foreground="White" 
+                                           FontSize="16"/>
+
+                                <ToggleSwitch Grid.Column="2" 
+                                              IsChecked="{Binding ShowSystemApps}" 
+                                              IsHitTestVisible="False"/>
+                            </Grid>
+                        </Button>
+
+                        <!-- 显示已禁用应用 -->
+                        <Button Background="Transparent" 
+                                BorderThickness="0" 
+                                Padding="16,12" 
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ToggleShowDisabledAppsCommand}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Path Grid.Column="0" 
+                                      Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,4 C13.1,4 14,4.9 14,6 L14,18 C14,19.1 13.1,20 12,20 C10.9,20 10,19.1 10,18 L10,6 C10,4.9 10.9,4 12,4 Z M8,8 L8,16 M16,8 L16,16" 
+                                      Fill="White" Width="24" Height="24" Margin="0,0,16,0"/>
+
+                                <TextBlock Grid.Column="1" 
+                                           Text="显示已禁用应用" 
+                                           Foreground="White" 
+                                           FontSize="16"/>
+
+                                <ToggleSwitch Grid.Column="2" 
+                                              IsChecked="{Binding ShowDisabledApps}" 
+                                              IsHitTestVisible="False"/>
+                            </Grid>
+                        </Button>
+                    </StackPanel>
+                </Border>
+
+                <!-- 应用列表 -->
+                <Border Background="#1E1E1E" 
+                        CornerRadius="16" 
+                        Padding="0">
+                    <StackPanel>
+                        <TextBlock Text="应用列表" 
+                                   Foreground="#B3FFFFFF" 
+                                   FontSize="14" 
+                                   Margin="20,20,0,16"/>
+
+                        <!-- 应用项 -->
+                        <ItemsControl ItemsSource="{Binding AppsList}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Button Background="Transparent" 
+                                            BorderThickness="0" 
+                                            Padding="20,16" 
+                                            HorizontalAlignment="Stretch"
+                                            Command="{Binding $parent[ItemsControl].DataContext.OpenAppDetailsCommand}"
+                                            CommandParameter="{Binding}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <!-- 应用图标 -->
+                                            <Border Grid.Column="0" 
+                                                    Width="48" 
+                                                    Height="48" 
+                                                    CornerRadius="12" 
+                                                    Background="#4CAF50" 
+                                                    Margin="0,0,16,0">
+                                                <TextBlock Text="{Binding Icon}" 
+                                                           Foreground="White" 
+                                                           FontSize="20" 
+                                                           FontWeight="SemiBold"
+                                                           HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center"/>
+                                            </Border>
+
+                                            <!-- 应用信息 -->
+                                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding AppName}" 
+                                                           Foreground="White" 
+                                                           FontSize="16" 
+                                                           FontWeight="Medium"/>
+                                                <TextBlock Text="{Binding Version}" 
+                                                           Foreground="#80FFFFFF" 
+                                                           FontSize="12" 
+                                                           Margin="0,2,0,0"/>
+                                                <TextBlock Text="{Binding Size, StringFormat='{}{0} MB'}" 
+                                                           Foreground="#80FFFFFF" 
+                                                           FontSize="12" 
+                                                           Margin="0,1,0,0"/>
+                                            </StackPanel>
+
+                                            <!-- 系统应用标记 -->
+                                            <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                                                <TextBlock Text="系统" 
+                                                           Foreground="#B3FFFFFF" 
+                                                           FontSize="12" 
+                                                           Margin="0,0,8,0" 
+                                                           IsVisible="False"/>
+                                                <Path Data="M9.29 6.71 L10.71 5.29 L17.41 12 L10.71 18.71 L9.29 17.29 L14.59 12 L9.29 6.71 Z" 
+                                                      Fill="#80FFFFFF" Width="24" Height="24"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Button>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

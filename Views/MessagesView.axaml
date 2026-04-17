@@ -1,0 +1,206 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:AndroidPadSimulator.ViewModels"
+             x:Class="AndroidPadSimulator.Views.MessagesView"
+             x:DataType="vm:MessagesViewModel">
+
+    <Grid Background="#FF121212">
+        <!-- 顶部状态栏 -->
+        <Grid VerticalAlignment="Top" Margin="24,16,24,0" Height="40">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- 返回按钮 -->
+            <Button Grid.Column="0"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Width="40"
+                    Height="40"
+                    Command="{Binding GoBackCommand}">
+                <Path Data="M20,11 L7.83,11 L13.42,5.41 L12,4 L4,12 L12,20 L13.41,18.59 L7.83,13 L20,13 L20,11 Z"
+                      Fill="White" Width="24" Height="24"/>
+            </Button>
+
+            <!-- 标题 -->
+            <TextBlock Grid.Column="1"
+                       Text="{Binding SelectedThread.ContactName, FallbackValue='信息'}"
+                       Foreground="White"
+                       FontSize="18"
+                       FontWeight="SemiBold"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"/>
+
+            <!-- 状态图标 -->
+            <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="10">
+                <Path Data="M2,18 L6,18 L6,22 L2,22 Z M7,16 L11,16 L11,22 L7,22 Z M12,12 L16,12 L16,22 L12,22 Z M17,8 L21,8 L21,22 L17,22 Z"
+                      Fill="White" Width="16" Height="16"/>
+                <Path Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,20 C7.59,20 4,16.41 4,12 C4,7.59 7.59,4 12,4 C16.41,4 20,7.59 20,12 C20,16.41 16.41,20 12,20 Z M12,6 C9.79,6 8,7.79 8,10 L10,10 C10,8.9 10.9,8 12,8 C13.1,8 14,8.9 14,10 L16,10 C16,7.79 14.21,6 12,6 Z"
+                      Fill="White" Width="16" Height="16"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- 消息列表 -->
+        <ScrollViewer IsVisible="{Binding !IsInConversation}"
+                      Margin="24,72,24,0">
+            <StackPanel Spacing="8">
+                <TextBlock Text="信息" Foreground="White" FontSize="28" FontWeight="SemiBold" Margin="0,16,0,8"/>
+                <ItemsControl ItemsSource="{Binding MessageThreads}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Background="#1E1E1E" 
+                                    CornerRadius="16"
+                                    Padding="16,12"
+                                    Margin="0,4"
+                                    BorderThickness="0"
+                                    HorizontalAlignment="Stretch"
+                                    Command="{Binding $parent[UserControl].DataContext.OpenConversationCommand}"
+                                    CommandParameter="{Binding}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- 头像 -->
+                                    <Border Grid.Column="0" 
+                                            Width="56" 
+                                            Height="56" 
+                                            CornerRadius="28"
+                                            Background="{Binding AvatarColor}">
+                                        <TextBlock Text="{Binding ContactName, Converter={StaticResource FirstCharConverter}}"
+                                                   Foreground="White"
+                                                   FontSize="24"
+                                                   FontWeight="SemiBold"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"/>
+                                    </Border>
+
+                                    <StackPanel Grid.Column="1" Margin="16,0,0,0" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding ContactName}" Foreground="White" FontSize="16" FontWeight="Medium"/>
+                                        <TextBlock Text="{Binding LastMessage}" Foreground="#B3FFFFFF" FontSize="14" Margin="0,4,0,0" TextTrimming="CharacterEllipsis"/>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="2" HorizontalAlignment="Right">
+                                        <TextBlock Text="{Binding Time}" Foreground="#80FFFFFF" FontSize="12"/>
+                                        <Border IsVisible="{Binding UnreadCount, Converter={StaticResource IntToBoolConverter}}"
+                                                Background="#4CAF50"
+                                                CornerRadius="10"
+                                                MinWidth="20"
+                                                Height="20"
+                                                HorizontalAlignment="Right"
+                                                Margin="0,4,0,0">
+                                            <TextBlock Text="{Binding UnreadCount}"
+                                                       Foreground="White"
+                                                       FontSize="12"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"/>
+                                        </Border>
+                                    </StackPanel>
+                                </Grid>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- 聊天界面 -->
+        <Grid IsVisible="{Binding IsInConversation}" Margin="0,72,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- 消息气泡 -->
+            <ScrollViewer Grid.Row="0" Margin="16,0">
+                <ItemsControl ItemsSource="{Binding CurrentMessages}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- 收到的消息 -->
+                                <Border Grid.Column="0"
+                                        IsVisible="{Binding !IsSent}"
+                                        Background="#3A3A3A"
+                                        CornerRadius="16,4,16,16"
+                                        Padding="16,12"
+                                        MaxWidth="400">
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Content}" Foreground="White" FontSize="16" TextWrapping="Wrap"/>
+                                        <TextBlock Text="{Binding Time}" Foreground="#80FFFFFF" FontSize="11" HorizontalAlignment="Right" Margin="0,4,0,0"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- 发送的消息 -->
+                                <Border Grid.Column="1"
+                                        IsVisible="{Binding IsSent}"
+                                        Background="#4CAF50"
+                                        CornerRadius="4,16,16,16"
+                                        Padding="16,12"
+                                        MaxWidth="400"
+                                        HorizontalAlignment="Right">
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Content}" Foreground="White" FontSize="16" TextWrapping="Wrap"/>
+                                        <TextBlock Text="{Binding Time}" Foreground="#CCFFFFFF" FontSize="11" HorizontalAlignment="Right" Margin="0,4,0,0"/>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+
+            <!-- 输入框 -->
+            <Grid Grid.Row="1" Background="#1E1E1E" Height="72">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Width="48"
+                        Height="48"
+                        Margin="8,0">
+                    <Path Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,20 C7.59,20 4,16.41 4,12 C4,7.59 7.59,4 12,4 C16.41,4 20,7.59 20,12 C20,16.41 16.41,20 12,20 Z M11,15 L13,15 L13,17 L11,17 L11,15 Z M11,7 L13,7 L13,13 L11,13 L11,7 Z"
+                          Fill="#80FFFFFF" Width="24" Height="24"/>
+                </Button>
+
+                <TextBox Grid.Column="1"
+                         Text="{Binding NewMessageText}"
+                         Watermark="发信息..."
+                         Background="#2A2A2A"
+                         Foreground="White"
+                         CornerRadius="24"
+                         Height="48"
+                         VerticalContentAlignment="Center"
+                         Padding="16,0"/>
+
+                <Button Grid.Column="2"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Width="48"
+                        Height="48"
+                        Margin="8,0"
+                        Command="{Binding SendMessageCommand}">
+                    <Path Data="M2.01,21 L23,12 L2.01,3 L2,10 L17,12 L2,14 L2.01,21 Z"
+                          Fill="#4CAF50" Width="24" Height="24"/>
+                </Button>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

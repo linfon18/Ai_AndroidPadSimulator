@@ -1,0 +1,54 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:AndroidPadSimulator.ViewModels"
+             x:Class="AndroidPadSimulator.Views.ReconnectingView"
+             x:DataType="vm:ReconnectingViewModel">
+
+    <Grid Background="#FF000000">
+        <!-- 加载动画 -->
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="24">
+            <!-- 旋转的加载圈 -->
+            <Grid Width="80" Height="80">
+                <Ellipse Width="80" Height="80" Stroke="#33FFFFFF" StrokeThickness="4"/>
+                <Arc x:Name="LoadingArc"
+                     Width="80" 
+                     Height="80" 
+                     Stroke="#4CAF50" 
+                     StrokeThickness="4"
+                     StartAngle="0"
+                     SweepAngle="90"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Center"/>
+            </Grid>
+            
+            <!-- 文字提示 -->
+            <TextBlock Text="{Binding StatusText}"
+                       Foreground="White"
+                       FontSize="20"
+                       FontWeight="Medium"
+                       HorizontalAlignment="Center"/>
+            
+            <!-- 进度条 -->
+            <ProgressBar Value="{Binding Progress}" 
+                         Maximum="100"
+                         Width="200"
+                         Height="4"
+                         Background="#33FFFFFF"
+                         Foreground="#4CAF50"/>
+            
+            <!-- 详细状态 -->
+            <TextBlock Text="{Binding DetailText}"
+                       Foreground="#B3FFFFFF"
+                       FontSize="14"
+                       HorizontalAlignment="Center"/>
+        </StackPanel>
+        
+        <!-- 底部提示 -->
+        <TextBlock Text="请勿关闭设备"
+                   Foreground="#66FFFFFF"
+                   FontSize="12"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Bottom"
+                   Margin="0,0,0,40"/>
+    </Grid>
+</UserControl>

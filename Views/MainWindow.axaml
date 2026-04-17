@@ -1,0 +1,118 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:AndroidPadSimulator.ViewModels"
+        xmlns:conv="using:AndroidPadSimulator.Converters"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="using:AndroidPadSimulator.Views"
+        mc:Ignorable="d"
+        d:DesignWidth="1280" d:DesignHeight="800"
+        x:Class="AndroidPadSimulator.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="Android Pad Simulator"
+        Width="1280" Height="800"
+        MinWidth="800" MinHeight="500"
+        Background="#1a1a1a"
+        WindowStartupLocation="CenterScreen">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+    <Grid>
+        <!-- 平板外框 -->
+        <Border Background="#2d2d2d"
+                CornerRadius="24"
+                Padding="16"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                BoxShadow="0 20 40 0 #000000">
+
+            <Grid>
+                <!-- 屏幕区域 -->
+                <Border Background="#000000"
+                        CornerRadius="12"
+                        Width="1000"
+                        Height="625"
+                        ClipToBounds="True">
+
+                    <!-- 内容区域 -->
+                    <Grid>
+                        <!-- 锁屏界面 -->
+                        <views:LockScreenView DataContext="{Binding LockScreenViewModel}"
+                                              IsVisible="{Binding $parent[Window].DataContext.IsLockScreenVisible}"
+                                              Opacity="{Binding $parent[Window].DataContext.LockScreenOpacity}">
+                            <views:LockScreenView.RenderTransform>
+                                <TranslateTransform Y="{Binding $parent[Window].DataContext.LockScreenTranslateY}"/>
+                            </views:LockScreenView.RenderTransform>
+                        </views:LockScreenView>
+
+                        <!-- 主屏幕 -->
+                        <views:HomeScreenView DataContext="{Binding HomeScreenViewModel}"
+                                              IsVisible="{Binding $parent[Window].DataContext.IsHomeScreenVisible}"
+                                              Opacity="{Binding $parent[Window].DataContext.HomeScreenOpacity}">
+                            <views:HomeScreenView.RenderTransform>
+                                <TranslateTransform Y="{Binding $parent[Window].DataContext.HomeScreenTranslateY}"/>
+                            </views:HomeScreenView.RenderTransform>
+                        </views:HomeScreenView>
+
+                        <!-- 控制栏 -->
+                        <views:ControlCenterView DataContext="{Binding ControlCenterViewModel}"
+                                                 IsVisible="{Binding $parent[Window].DataContext.IsControlCenterOpen}"/>
+
+                        <!-- 设置界面 -->
+                        <views:SettingsView DataContext="{Binding SettingsViewModel}"
+                                            IsVisible="{Binding $parent[Window].DataContext.IsSettingsOpen}"/>
+
+                        <!-- 重新连接界面（彩蛋） -->
+                        <views:ReconnectingView DataContext="{Binding ReconnectingViewModel}"
+                                                IsVisible="{Binding $parent[Window].DataContext.IsReconnectingOpen}"/>
+
+                        <!-- 软件更新界面 -->
+                        <views:SoftwareUpdateView DataContext="{Binding SoftwareUpdateViewModel}"
+                                                  IsVisible="{Binding $parent[Window].DataContext.IsSoftwareUpdateOpen}"/>
+
+                        <!-- 关于设备界面 -->
+                        <views:AboutDeviceView DataContext="{Binding AboutDeviceViewModel}"
+                                               IsVisible="{Binding $parent[Window].DataContext.IsAboutDeviceOpen}"/>
+
+                        <!-- 用户个人资料界面 -->
+                        <views:UserProfileView DataContext="{Binding UserProfileViewModel}"
+                                               IsVisible="{Binding $parent[Window].DataContext.IsUserProfileOpen}"/>
+
+                        <!-- 存储设置界面 -->
+                        <views:StorageSettingsView DataContext="{Binding StorageSettingsViewModel}"
+                                                   IsVisible="{Binding $parent[Window].DataContext.IsStorageSettingsOpen}"/>
+
+                        <!-- 已安装应用界面 -->
+                        <views:InstalledAppsView DataContext="{Binding InstalledAppsViewModel}"
+                                                 IsVisible="{Binding $parent[Window].DataContext.IsInstalledAppsOpen}"/>
+
+                        <!-- 正在运行应用界面 -->
+                        <views:RunningAppsView DataContext="{Binding RunningAppsViewModel}"
+                                               IsVisible="{Binding $parent[Window].DataContext.IsRunningAppsOpen}"/>
+
+                        <!-- 电话界面 -->
+                        <views:PhoneView DataContext="{Binding PhoneViewModel}"
+                                         IsVisible="{Binding $parent[Window].DataContext.IsPhoneOpen}"/>
+
+                        <!-- 信息界面 -->
+                        <views:MessagesView DataContext="{Binding MessagesViewModel}"
+                                            IsVisible="{Binding $parent[Window].DataContext.IsMessagesOpen}"/>
+
+                        <!-- Chrome浏览器界面 -->
+                        <views:ChromeView DataContext="{Binding ChromeViewModel}"
+                                          IsVisible="{Binding $parent[Window].DataContext.IsChromeOpen}"/>
+                    </Grid>
+                </Border>
+
+                <!-- 前置摄像头 -->
+                <Ellipse Width="8" Height="8"
+                         Fill="#1a1a1a"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Top"
+                         Margin="0,6,0,0"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

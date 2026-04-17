@@ -1,0 +1,382 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:AndroidPadSimulator.ViewModels"
+             x:Class="AndroidPadSimulator.Views.AboutDeviceView"
+             x:DataType="vm:AboutDeviceViewModel">
+
+    <Design.DataContext>
+        <vm:AboutDeviceViewModel />
+    </Design.DataContext>
+
+    <Grid Background="#000000">
+        <!-- 顶部标题栏 -->
+        <Grid Height="56" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- 返回按钮 -->
+            <Button Grid.Column="0"
+                    Width="48"
+                    Height="48"
+                    Margin="8,0,0,0"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center">
+                <Path Data="M20,11 L7.83,11 L13.42,5.41 L12,4 L4,12 L12,20 L13.41,18.59 L7.83,13 L20,13 L20,11 Z"
+                      Fill="White" Width="24" Height="24"/>
+            </Button>
+
+            <!-- 标题 -->
+            <TextBlock Grid.Column="1"
+                       Text="关于设备"
+                       Foreground="White"
+                       FontSize="20"
+                       FontWeight="Medium"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Left"
+                       Margin="16,0,0,0"/>
+        </Grid>
+
+        <!-- 内容区域 -->
+        <ScrollViewer Margin="0,56,0,0">
+            <StackPanel Margin="16,8">
+                <!-- 设备信息卡片 -->
+                <Border Background="#1E1E1E" CornerRadius="24" Padding="24" Margin="0,8">
+                    <StackPanel>
+                        <!-- 设备图标 - Android机器人 -->
+                        <Border Width="80" Height="80" CornerRadius="20" Background="#3DDC84" HorizontalAlignment="Center" Margin="0,0,0,16">
+                            <Path Data="M17.6,9.48 L19.2,6.58 C19.38,6.26 19.26,5.86 18.94,5.68 C18.62,5.5 18.22,5.62 18.04,5.94 L16.38,8.92 C15.36,8.44 14.22,8.16 13,8.08 L13,5 L15,5 C15.55,5 16,4.55 16,4 C16,3.45 15.55,3 15,3 L11,3 C10.45,3 10,3.45 10,4 C10,4.55 10.45,5 11,5 L13,5 L13,8.08 C9.14,8.34 6.1,11.44 5.76,15.34 C5.74,15.56 5.92,15.74 6.14,15.74 L6.24,15.74 C6.42,15.74 6.58,15.6 6.6,15.42 C6.96,11.84 9.86,9 13.5,9 C15.46,9 17.22,9.84 18.48,11.18 L18.5,11.18 C18.68,11.38 18.98,11.4 19.18,11.22 C19.4,11.02 19.42,10.68 19.22,10.46 L17.6,9.48 Z M6,16 C5.45,16 5,16.45 5,17 L5,21 C5,21.55 5.45,22 6,22 C6.55,22 7,21.55 7,21 L7,17 C7,16.45 6.55,16 6,16 Z M21,16 C20.45,16 20,16.45 20,17 L20,21 C20,21.55 20.45,22 21,22 C21.55,22 22,21.55 22,21 L22,17 C22,16.45 21.55,16 21,16 Z M8,16 L8,22 C8,22.55 8.45,23 9,23 L18,23 C18.55,23 19,22.55 19,22 L19,16 C19,12.68 16.42,10 13.5,10 C10.58,10 8,12.68 8,16 Z"
+                                  Fill="White" Width="48" Height="48" Stretch="Uniform"/>
+                        </Border>
+
+                        <!-- 设备名称 -->
+                        <TextBlock Text="{Binding DeviceName}"
+                                   Foreground="White"
+                                   FontSize="24"
+                                   FontWeight="SemiBold"
+                                   HorizontalAlignment="Center"/>
+
+                        <!-- Android版本 -->
+                        <TextBlock Text="{Binding AndroidVersion}"
+                                   Foreground="#B3FFFFFF"
+                                   FontSize="16"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,8,0,0"/>
+
+                        <!-- 版本代号 -->
+                        <TextBlock Text="{Binding AndroidVersionCode}"
+                                   Foreground="#80FFFFFF"
+                                   FontSize="14"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- 系统更新 -->
+                <Border Background="#1E1E1E" CornerRadius="16" Margin="0,8">
+                    <StackPanel>
+                        <Button Background="Transparent"
+                                BorderThickness="0"
+                                Padding="20,16"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding CheckUpdateCommand}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Border Grid.Column="0"
+                                        Width="40"
+                                        Height="40"
+                                        CornerRadius="20"
+                                        Background="#4CAF50">
+                                    <Path Data="M12,4 L12,1 L8,5 L12,9 L12,6 C15.31,6 18,8.69 18,12 C18,13.01 17.75,13.97 17.3,14.8 L18.76,16.26 C19.54,15.03 20,13.57 20,12 C20,7.58 16.42,4 12,4 Z M12,18 C8.69,18 6,15.31 6,12 C6,10.99 6.25,10.03 6.7,9.2 L5.24,7.74 C4.46,8.97 4,10.43 4,12 C4,16.42 7.58,20 12,20 L12,23 L16,19 L12,15 L12,18 Z"
+                                          Fill="White" Width="24" Height="24"/>
+                                </Border>
+
+                                <StackPanel Grid.Column="1" Margin="16,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock Text="系统更新" Foreground="White" FontSize="16"/>
+                                    <TextBlock Text="您的系统已是最新版本" Foreground="#B3FFFFFF" FontSize="14" Margin="0,2,0,0"/>
+                                </StackPanel>
+
+                                <Path Grid.Column="2"
+                                      Data="M9.29,6.71 L10.71,5.29 L17.41,12 L10.71,18.71 L9.29,17.29 L14.59,12 L9.29,6.71 Z"
+                                      Fill="#80FFFFFF" Width="24" Height="24"/>
+                            </Grid>
+                        </Button>
+                    </StackPanel>
+                </Border>
+
+                <!-- 设备详情 -->
+                <TextBlock Text="设备详情" Foreground="#B3FFFFFF" FontSize="14" Margin="0,24,0,8"/>
+
+                <Border Background="#1E1E1E" CornerRadius="16" Margin="0,8">
+                    <StackPanel>
+                        <!-- 型号 -->
+                        <Grid Margin="20,16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="型号" Foreground="White" FontSize="16"/>
+                            <TextBlock Grid.Column="1" Text="{Binding Model}" Foreground="#B3FFFFFF" FontSize="16"/>
+                        </Grid>
+
+                        <Border Height="1" Background="#33FFFFFF" Margin="20,0"/>
+
+                        <!-- Android版本 -->
+                        <Button Background="Transparent"
+                                BorderThickness="0"
+                                Padding="20,16"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding AndroidVersionClickCommand}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="Android版本" Foreground="White" FontSize="16" VerticalAlignment="Center"/>
+                                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                    <TextBlock Text="{Binding AndroidVersion}" Foreground="#B3FFFFFF" FontSize="16" VerticalAlignment="Center"/>
+                                    <Path Data="M9.29,6.71 L10.71,5.29 L17.41,12 L10.71,18.71 L9.29,17.29 L14.59,12 L9.29,6.71 Z"
+                                          Fill="#80FFFFFF" Width="20" Height="20" Margin="8,0,0,0"/>
+                                </StackPanel>
+                            </Grid>
+                        </Button>
+
+                        <Border Height="1" Background="#33FFFFFF" Margin="20,0"/>
+
+                        <!-- 版本号 -->
+                        <Button Background="Transparent"
+                                BorderThickness="0"
+                                Padding="20,16"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding BuildNumberClickCommand}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="版本号" Foreground="White" FontSize="16" VerticalAlignment="Center"/>
+                                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                    <TextBlock Text="{Binding BuildNumber}" Foreground="#B3FFFFFF" FontSize="16" VerticalAlignment="Center"/>
+                                    <Path Data="M9.29,6.71 L10.71,5.29 L17.41,12 L10.71,18.71 L9.29,17.29 L14.59,12 L9.29,6.71 Z"
+                                          Fill="#80FFFFFF" Width="20" Height="20" Margin="8,0,0,0"/>
+                                </StackPanel>
+                            </Grid>
+                        </Button>
+
+                        <Border Height="1" Background="#33FFFFFF" Margin="20,0"/>
+
+                        <!-- 安全补丁级别 -->
+                        <Grid Margin="20,16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="安全补丁级别" Foreground="White" FontSize="16"/>
+                            <TextBlock Grid.Column="1" Text="{Binding SecurityPatch}" Foreground="#B3FFFFFF" FontSize="16"/>
+                        </Grid>
+
+                        <Border Height="1" Background="#33FFFFFF" Margin="20,0"/>
+
+                        <!-- 基带版本 -->
+                        <Grid Margin="20,16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="基带版本" Foreground="White" FontSize="16"/>
+                            <TextBlock Grid.Column="1" Text="{Binding BasebandVersion}" Foreground="#B3FFFFFF" FontSize="14" TextTrimming="CharacterEllipsis" MaxWidth="150"/>
+                        </Grid>
+
+                        <Border Height="1" Background="#33FFFFFF" Margin="20,0"/>
+
+                        <!-- 内核版本 -->
+                        <Grid Margin="20,16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="内核版本" Foreground="White" FontSize="16"/>
+                            <TextBlock Grid.Column="1" Text="{Binding KernelVersion}" Foreground="#B3FFFFFF" FontSize="12" TextTrimming="CharacterEllipsis" MaxWidth="180"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- 状态信息 -->
+                <TextBlock Text="状态" Foreground="#B3FFFFFF" FontSize="14" Margin="0,24,0,8"/>
+
+                <Border Background="#1E1E1E" CornerRadius="16" Margin="0,8">
+                    <StackPanel>
+                        <!-- SIM卡状态 -->
+                        <Grid Margin="20,16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="SIM卡状态" Foreground="White" FontSize="16"/>
+                            <TextBlock Grid.Column="1" Text="已激活" Foreground="#4CAF50" FontSize="16"/>
+                        </Grid>
+
+                        <Border Height="1" Background="#33FFFFFF" Margin="20,0"/>
+
+                        <!-- IMEI -->
+                        <Grid Margin="20,16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="IMEI" Foreground="White" FontSize="16"/>
+                            <TextBlock Grid.Column="1" Text="{Binding Imei}" Foreground="#B3FFFFFF" FontSize="16"/>
+                        </Grid>
+
+                        <Border Height="1" Background="#33FFFFFF" Margin="20,0"/>
+
+                        <!-- IP地址 -->
+                        <Grid Margin="20,16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="IP地址" Foreground="White" FontSize="16"/>
+                            <TextBlock Grid.Column="1" Text="{Binding IpAddress}" Foreground="#B3FFFFFF" FontSize="16"/>
+                        </Grid>
+
+                        <Border Height="1" Background="#33FFFFFF" Margin="20,0"/>
+
+                        <!-- Wi-Fi MAC地址 -->
+                        <Grid Margin="20,16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Wi-Fi MAC地址" Foreground="White" FontSize="16"/>
+                            <TextBlock Grid.Column="1" Text="{Binding WifiMacAddress}" Foreground="#B3FFFFFF" FontSize="16"/>
+                        </Grid>
+
+                        <Border Height="1" Background="#33FFFFFF" Margin="20,0"/>
+
+                        <!-- 蓝牙地址 -->
+                        <Grid Margin="20,16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="蓝牙地址" Foreground="White" FontSize="16"/>
+                            <TextBlock Grid.Column="1" Text="{Binding BluetoothAddress}" Foreground="#B3FFFFFF" FontSize="16"/>
+                        </Grid>
+
+                        <Border Height="1" Background="#33FFFFFF" Margin="20,0"/>
+
+                        <!-- 运行时间 -->
+                        <Grid Margin="20,16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="运行时间" Foreground="White" FontSize="16"/>
+                            <TextBlock Grid.Column="1" Text="{Binding Uptime}" Foreground="#B3FFFFFF" FontSize="16"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- 法律信息 -->
+                <TextBlock Text="法律信息" Foreground="#B3FFFFFF" FontSize="14" Margin="0,24,0,8"/>
+
+                <Border Background="#1E1E1E" CornerRadius="16" Margin="0,8">
+                    <StackPanel>
+                        <Button Background="Transparent"
+                                BorderThickness="0"
+                                Padding="20,16"
+                                HorizontalAlignment="Stretch">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="法律信息" Foreground="White" FontSize="16"/>
+                                <Path Grid.Column="1"
+                                      Data="M9.29,6.71 L10.71,5.29 L17.41,12 L10.71,18.71 L9.29,17.29 L14.59,12 L9.29,6.71 Z"
+                                      Fill="#80FFFFFF" Width="24" Height="24"/>
+                            </Grid>
+                        </Button>
+
+                        <Border Height="1" Background="#33FFFFFF" Margin="20,0"/>
+
+                        <Button Background="Transparent"
+                                BorderThickness="0"
+                                Padding="20,16"
+                                HorizontalAlignment="Stretch">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="监管标签" Foreground="White" FontSize="16"/>
+                                <Path Grid.Column="1"
+                                      Data="M9.29,6.71 L10.71,5.29 L17.41,12 L10.71,18.71 L9.29,17.29 L14.59,12 L9.29,6.71 Z"
+                                      Fill="#80FFFFFF" Width="24" Height="24"/>
+                            </Grid>
+                        </Button>
+
+                        <Border Height="1" Background="#33FFFFFF" Margin="20,0"/>
+
+                        <Button Background="Transparent"
+                                BorderThickness="0"
+                                Padding="20,16"
+                                HorizontalAlignment="Stretch">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="安全与监管手册" Foreground="White" FontSize="16"/>
+                                <Path Grid.Column="1"
+                                      Data="M9.29,6.71 L10.71,5.29 L17.41,12 L10.71,18.71 L9.29,17.29 L14.59,12 L9.29,6.71 Z"
+                                      Fill="#80FFFFFF" Width="24" Height="24"/>
+                            </Grid>
+                        </Button>
+                    </StackPanel>
+                </Border>
+
+                <!-- 开发者选项提示 -->
+                <Border Background="#1E1E1E" 
+                        CornerRadius="16" 
+                        Margin="0,8,0,24"
+                        IsVisible="{Binding IsDeveloperOptionsVisible}">
+                    <Grid Margin="20,16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.Column="0"
+                                Width="40"
+                                Height="40"
+                                CornerRadius="20"
+                                Background="#FF9800"
+                                Margin="0,0,16,0">
+                            <Path Data="M9.4,16.6 L10.8,15.2 L7.6,12 L10.8,8.8 L9.4,7.4 L4.8,12 L9.4,16.6 Z M14.6,16.6 L19.2,12 L14.6,7.4 L13.2,8.8 L16.4,12 L13.2,15.2 L14.6,16.6 Z"
+                                  Fill="White" Width="24" Height="24"/>
+                        </Border>
+
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                            <TextBlock Text="开发者选项" Foreground="White" FontSize="16"/>
+                            <TextBlock Text="{Binding DeveloperOptionsStatus}" Foreground="#B3FFFFFF" FontSize="14" Margin="0,2,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- 底部间距 -->
+                <Border Height="32"/>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
